@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZK.NetCore.Util", "ZK.NetCore.Util\ZK.NetCore.Util.csproj", "{0B3801A3-DEFD-439F-BA6E-5BFE333DAE46}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZK.NetStandard.Util", "ZK.NetStandard.Util\ZK.NetStandard.Util.csproj", "{43F97E03-EA53-4959-88D3-46FCF74EC507}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZK.NetCore.WebAPI", "ZK.NetCore.WebAPI\ZK.NetCore.WebAPI.csproj", "{50F34810-0228-4E46-A6CA-81D91946C5BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandard", "NetStandard", "{2AEA74D6-74E4-4E27-B6E9-F5FEB66B5941}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetCore", "NetCore", "{1483498B-B513-4540-9914-4C0710D17CFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZK.NetCore.ConsoleApp", "ZK.NetCore.ConsoleApp\ZK.NetCore.ConsoleApp.csproj", "{48146B07-C72F-4C6D-977F-438D57A351F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForm_Sudio", "WinForm_Sudio\WinForm_Sudio.csproj", "{538D6449-387C-4982-BDEF-691F7AF065C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B3801A3-DEFD-439F-BA6E-5BFE333DAE46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3801A3-DEFD-439F-BA6E-5BFE333DAE46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3801A3-DEFD-439F-BA6E-5BFE333DAE46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3801A3-DEFD-439F-BA6E-5BFE333DAE46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F97E03-EA53-4959-88D3-46FCF74EC507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F97E03-EA53-4959-88D3-46FCF74EC507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F97E03-EA53-4959-88D3-46FCF74EC507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F97E03-EA53-4959-88D3-46FCF74EC507}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F34810-0228-4E46-A6CA-81D91946C5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F34810-0228-4E46-A6CA-81D91946C5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F34810-0228-4E46-A6CA-81D91946C5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F34810-0228-4E46-A6CA-81D91946C5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48146B07-C72F-4C6D-977F-438D57A351F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48146B07-C72F-4C6D-977F-438D57A351F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48146B07-C72F-4C6D-977F-438D57A351F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48146B07-C72F-4C6D-977F-438D57A351F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{538D6449-387C-4982-BDEF-691F7AF065C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538D6449-387C-4982-BDEF-691F7AF065C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538D6449-387C-4982-BDEF-691F7AF065C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{538D6449-387C-4982-BDEF-691F7AF065C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0B3801A3-DEFD-439F-BA6E-5BFE333DAE46} = {1483498B-B513-4540-9914-4C0710D17CFA}
+		{43F97E03-EA53-4959-88D3-46FCF74EC507} = {2AEA74D6-74E4-4E27-B6E9-F5FEB66B5941}
+		{50F34810-0228-4E46-A6CA-81D91946C5BB} = {1483498B-B513-4540-9914-4C0710D17CFA}
+		{48146B07-C72F-4C6D-977F-438D57A351F6} = {1483498B-B513-4540-9914-4C0710D17CFA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EE935C8-D2B9-41CE-909D-8309CCCB251C}
+	EndGlobalSection
+EndGlobal
