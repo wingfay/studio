@@ -1,6 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace ZK.NetStandard.Util
 {

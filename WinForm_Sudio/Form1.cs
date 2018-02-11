@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZK.NetStandard.Util;
 
 namespace WinForm_Sudio
 {
@@ -15,6 +16,16 @@ namespace WinForm_Sudio
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string strBool = "dsftrue234";
+
+           // MessageBox.Show(strBool.GetBool().ToString());
+
+            MessageBox.Show(strBool.GetInt().ToString());
+
         }
     }
 }
