@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinForm_Sudio.AOP;
 using ZK.NetStandard.Util;
 
 namespace WinForm_Sudio
@@ -26,6 +27,12 @@ namespace WinForm_Sudio
 
             MessageBox.Show(strBool.GetInt().ToString());
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BusinessHandler handler = new BusinessHandler();
+            handler.DoSomething();
         }
     }
 }
