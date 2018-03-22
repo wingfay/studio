@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AMQPNetLite" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ZK.NetStandard.Util\ZK.NetStandard.Util.csproj" />
   </ItemGroup>
 
