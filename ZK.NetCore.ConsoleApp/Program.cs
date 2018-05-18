@@ -127,60 +127,60 @@ namespace ZK.NetCore.ConsoleApp
             }
         }
 
-        /// <summary>
-        /// This example assumes a topic and a subscirption named "sub1" is precreated.
-        /// Example.Entity should be set to the topic name.
-        /// </summary>
-        class TopicExample : Example
-        {
-            public override void Run()
-            {
-                this.SendReceiveAsync(10).GetAwaiter().GetResult();
-            }
+        ///// <summary>
+        ///// This example assumes a topic and a subscirption named "sub1" is precreated.
+        ///// Example.Entity should be set to the topic name.
+        ///// </summary>
+        //class TopicExample : Example
+        //{
+        //    public override void Run()
+        //    {
+        //        this.SendReceiveAsync(10).GetAwaiter().GetResult();
+        //    }
 
-            async Task SendReceiveAsync(int count)
-            {
-                Trace.WriteLine(TraceLevel.Information, "Establishing a connection...");
-                Connection connection = await Connection.Factory.CreateAsync(this.GetAddress());
+        //    async Task SendReceiveAsync(int count)
+        //    {
+        //        Trace.WriteLine(TraceLevel.Information, "Establishing a connection...");
+        //        Connection connection = await Connection.Factory.CreateAsync(this.GetAddress());
 
-                Trace.WriteLine(TraceLevel.Information, "Creating a session...");
-                Session session = new Session(connection);
+        //        Trace.WriteLine(TraceLevel.Information, "Creating a session...");
+        //        Session session = new Session(connection);
 
-                Trace.WriteLine(TraceLevel.Information, "Creating a sender link...");
-                SenderLink sender = new SenderLink(session, "topic-sender-link", this.Entity);
+        //        Trace.WriteLine(TraceLevel.Information, "Creating a sender link...");
+        //        SenderLink sender = new SenderLink(session, "topic-sender-link", this.Entity);
 
-                Trace.WriteLine(TraceLevel.Information, "Sending {0} messages...", count);
-                for (int i = 0; i < count; i++)
-                {
-                    Message message = new Message();
-                    message.Properties = new Properties() { MessageId = "topic-test-" + i };
-                    message.BodySection = new Data() { Binary = Encoding.UTF8.GetBytes("message #" + i) };
-                    await sender.SendAsync(message);
-                }
+        //        Trace.WriteLine(TraceLevel.Information, "Sending {0} messages...", count);
+        //        for (int i = 0; i < count; i++)
+        //        {
+        //            Message message = new Message();
+        //            message.Properties = new Properties() { MessageId = "topic-test-" + i };
+        //            message.BodySection = new Data() { Binary = Encoding.UTF8.GetBytes("message #" + i) };
+        //            await sender.SendAsync(message);
+        //        }
 
-                Trace.WriteLine(TraceLevel.Information, "Closing sender...");
-                await sender.CloseAsync();
+        //        Trace.WriteLine(TraceLevel.Information, "Closing sender...");
+        //        await sender.CloseAsync();
 
-                Trace.WriteLine(TraceLevel.Information, "Receiving messages from subscription...");
-                ReceiverLink receiver = new ReceiverLink(session, "receiver-link", this.Entity + "/Subscriptions/sub1");
-                for (int i = 0; i < count; i++)
-                {
-                    Message message = await receiver.ReceiveAsync();
-                    if (message == null)
-                    {
-                        break;
-                    }
+        //        Trace.WriteLine(TraceLevel.Information, "Receiving messages from subscription...");
+        //        ReceiverLink receiver = new ReceiverLink(session, "receiver-link", this.Entity + "/Subscriptions/sub1");
+        //        for (int i = 0; i < count; i++)
+        //        {
+        //            Message message = await receiver.ReceiveAsync();
+        //            if (message == null)
+        //            {
+        //                break;
+        //            }
 
-                    receiver.Accept(message);
-                }
+        //            receiver.Accept(message);
+        //        }
 
-                Trace.WriteLine(TraceLevel.Information, "Closing receiver...");
-                await receiver.CloseAsync();
+        //        Trace.WriteLine(TraceLevel.Information, "Closing receiver...");
+        //        await receiver.CloseAsync();
 
-                Trace.WriteLine(TraceLevel.Information, "Shutting down...");
-                await session.CloseAsync();
-                await connection.CloseAsync();
-            }
-        }
+        //        Trace.WriteLine(TraceLevel.Information, "Shutting down...");
+        //        await session.CloseAsync();
+        //        await connection.CloseAsync();
+        //    }
+        //}
     }
 }
