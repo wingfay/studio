@@ -21,7 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FastCurd模型构建", "Fas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4template", "T4template\T4template.csproj", "{89AE9A60-1D34-4D7F-B24D-9300BCBCAA02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quartz_demo", "Quartz_demo\Quartz_demo.csproj", "{A99DC5AE-FBA5-4178-8885-B2F33E5C58D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quartz_demo", "Quartz_demo\Quartz_demo.csproj", "{A99DC5AE-FBA5-4178-8885-B2F33E5C58D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "freamwork", "freamwork", "{9639EE97-2B89-4371-AF20-F31A684B7FA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Cache.Redis", "Common.Cache.Redis\Common.Cache.Redis.csproj", "{F5EAA1B4-59DE-4C12-9775-3D80B1B00BC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{A99DC5AE-FBA5-4178-8885-B2F33E5C58D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A99DC5AE-FBA5-4178-8885-B2F33E5C58D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A99DC5AE-FBA5-4178-8885-B2F33E5C58D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5EAA1B4-59DE-4C12-9775-3D80B1B00BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5EAA1B4-59DE-4C12-9775-3D80B1B00BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5EAA1B4-59DE-4C12-9775-3D80B1B00BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5EAA1B4-59DE-4C12-9775-3D80B1B00BC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,7 @@ Global
 		{50F34810-0228-4E46-A6CA-81D91946C5BB} = {1483498B-B513-4540-9914-4C0710D17CFA}
 		{48146B07-C72F-4C6D-977F-438D57A351F6} = {1483498B-B513-4540-9914-4C0710D17CFA}
 		{89AE9A60-1D34-4D7F-B24D-9300BCBCAA02} = {EDBC157B-3AA2-4C17-B893-FB90135C7307}
+		{F5EAA1B4-59DE-4C12-9775-3D80B1B00BC4} = {9639EE97-2B89-4371-AF20-F31A684B7FA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EE935C8-D2B9-41CE-909D-8309CCCB251C}

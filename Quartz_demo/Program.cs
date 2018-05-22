@@ -15,12 +15,20 @@ namespace Quartz_demo
     {
         static void Main(string[] args)
         {
-            RunProgram().GetAwaiter().GetResult();
+            var task = RunProgram().GetAwaiter();
+
+
+            var i =  task.GetResult();
+
+            System.Console.WriteLine(i);
+
+            Console.WriteLine("启动成功 ");
+            Console.ReadKey();
 
         }
 
 
-        private static async Task RunProgram()
+        private static async Task<int> RunProgram()
         {
             try
             {
@@ -30,12 +38,15 @@ namespace Quartz_demo
                     { "quartz.serializer.type", "binary" }
                 };
 
+
                 //创建一个标准调度器工厂
                 ISchedulerFactory factory = new StdSchedulerFactory(props);
                 //通过从标准调度器工厂获得一个调度器，用来启动任务
                 IScheduler scheduler = await factory.GetScheduler();
                 //调度器的线程开始执行，用以触发Trigger
+
                 await scheduler.Start();
+
 
                 //使用组别、名称创建一个工作明细，此处为所需要执行的任务
                 IJobDetail detail1 = JobBuilder.Create<MyFirstJob>().WithIdentity("MyJob1", "MyGroup").Build();
@@ -57,11 +68,15 @@ namespace Quartz_demo
                 await scheduler.ScheduleJob(detail2, trigger2);
                 await scheduler.ScheduleJob(detail3, trigger3);
 
+              
+
             }
             catch (SchedulerException se)
             {
                 await Console.Error.WriteLineAsync(se.ToString());
             }
+
+            return 0;
         }
 
     }
