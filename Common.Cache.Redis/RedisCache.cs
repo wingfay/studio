@@ -51,7 +51,7 @@ namespace Common.Cache.Redis
             }
             catch (Exception ex)
             {
-                
+                throw (ex);
                 return false;
             }
         }
@@ -75,6 +75,7 @@ namespace Common.Cache.Redis
             }
             catch (Exception ex)
             {
+                throw (ex);
                 return false;
             }
         }
@@ -97,6 +98,7 @@ namespace Common.Cache.Redis
             }
             catch (Exception ex)
             {
+                throw (ex);
                 return false;
             }
         }
