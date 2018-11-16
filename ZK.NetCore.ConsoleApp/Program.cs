@@ -23,18 +23,26 @@ namespace ZK.NetCore.ConsoleApp
             //CodeTimer.Time("StringBuilder", iteration, () => { sb.Append("a"); });
 
 
-            string address = "amqp://guest:guest@127.0.0.1:5672";
-            if (args.Length > 0)
+            //string address = "amqp://guest:guest@127.0.0.1:5672";
+            //if (args.Length > 0)
+            //{
+            //    address = args[0];
+            //}
+
+            //// uncomment the following to write frame traces
+            ////Trace.TraceLevel = TraceLevel.Frame;
+            ////Trace.TraceListener = (l, f, a) => Console.WriteLine(DateTime.Now.ToString("[hh:mm:ss.fff]") + " " + string.Format(f, a));
+
+            //Console.WriteLine("Running request client...");
+            //new Client(address).Run();
+
+            var x = 10;
+            while(x-->0)
             {
-                address = args[0];
+                System.Console.WriteLine(x);
             }
 
-            // uncomment the following to write frame traces
-            //Trace.TraceLevel = TraceLevel.Frame;
-            //Trace.TraceListener = (l, f, a) => Console.WriteLine(DateTime.Now.ToString("[hh:mm:ss.fff]") + " " + string.Format(f, a));
-
-            Console.WriteLine("Running request client...");
-            new Client(address).Run();
+            System.Console.ReadKey();
 
         }
 

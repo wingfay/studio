@@ -1,0 +1,112 @@
+﻿@model ZP.Bill.buyer
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>buyer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubBank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubBank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankNumberPersonName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankNumberPersonName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SellerLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SellerLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAuthentication)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAuthentication)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastLoginDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastLoginDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,106 @@
+﻿@model ZP.Bill.buyer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>buyer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubBank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubBank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankNumberPersonName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankNumberPersonName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SellerLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SellerLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAuthentication)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAuthentication)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastLoginDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastLoginDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

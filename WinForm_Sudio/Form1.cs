@@ -37,7 +37,9 @@ namespace WinForm_Sudio
 
         private void button3_Click(object sender, EventArgs e)
         {
+            List<string> a = new List<string> { "A", "N", "C" };
 
+            MessageBox.Show(string.Join(",", a));
         }
     }
 }

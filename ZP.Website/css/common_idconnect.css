@@ -1,0 +1,193 @@
+﻿@charset "UTF-8";
+/*
+******************************************
+base.css
+---------------------
+1 initialize
+2 adjust
+3 layout
+
+common.css
+---------------------
+4 common
+5 page
+6 plugin
+7 animation
+8 css hack
+*****************************************/
+
+/* 4 common
+******************************************/
+
+/* 4-1 text
+-----------------------------------------*/
+.attention1 { clear: both; font-weight: bold; margin-bottom: 5px; color: #FF0000; }
+
+/* 4-3 link/button/tab
+-----------------------------------------*/
+/* btn2 */
+.btn2 { }
+.btn2 a { display: inline-block; position: relative; box-shadow: 0px 0px 2px rgba(0,0,0,0.3); text-align: center; font-weight: bold; width: 160px; height: 34px; line-height: 34px; color: #666; text-shadow: -1px -1px 1px #fff; background: #F2F2F6; background: -ms-linear-gradient(top, #FFFFFF 0%, #F2F2F6 80%); background: -moz-linear-gradient(top, #FFFFFF 0%, #F2F2F6 80%); background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F2F2F6)); text-decoration: none; font-size: 15px; border-radius: 17px; border: 1px solid #999; border-top: 0; border-left: 0; }
+.btn2 a:hover { color: #8C8BA3; }
+.btn2 a.large1 { width: 100%; border-radius: 5px; }
+.btn2_2 a { display: inline-block; position: relative; box-shadow: 0px 0px 2px rgba(0,0,0,0.3); text-align: center; font-weight: bold; width: 160px; height: 34px; line-height: 34px; color: #666; text-shadow: -1px -1px 1px #fff; background: #EEECE0; background: -ms-linear-gradient(top, #FFFFFF 0%, #EEECE0 80%); background: -moz-linear-gradient(top, #FFFFFF 0%, #EEECE0 80%); background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#EEECE0)); text-decoration: none; font-size: 15px; border-radius: 17px; border: 1px solid #C9BF9C; border-top: 0; border-left: 0; }
+
+/* btn6 */
+.btn6 { }
+.btn6 a { display: inline-block; box-shadow: 1px 1px 2px rgba(0,0,0,0.3); text-align: center; width: 120px; height: 34px; line-height: 36px; color: #333; font-weight: bold; background: #F2F2F6; background: -ms-linear-gradient(top, #FFFFFF 0%, #F2F2F6 80%); background: -moz-linear-gradient(top, #FFFFFF 0%, #F2F2F6 80%); background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F2F2F6)); text-decoration: none; font-size: 15px; border-radius: 17px; border: 1px solid #B6B6C4; border-top: 1px solid #EBEBF1; border-left: 1px solid #EBEBF1; }
+.btn6 a:hover { color: #8C8BA3; }
+.btn6 a.small1 { width: 80px; height: 21px; line-height: 21px; font-size: 11px; }
+.btn6 a.small2 { width: 60px; height: 29px; line-height: 29px; font-size: 11px; }
+
+/* sns button */
+.btnSns1 a { width: 100%; height: 38px; line-height: 38px; font-size: 15px; }
+.btnSns1 a:after { content: ""; width: 26px; height: 24px; position: absolute; left: 20px; top: 7px; background: url(../img/idConnect/IconBtns.png) 0 0 no-repeat; }
+.btnSns1 a span { color: #3A579D; }
+.btnSns1 a:hover span { color: #7286B8; }
+.btnSns1 a:hover:after { background: url(../img/idConnect/IconBtns.png) 0 -24px no-repeat; }
+.btnSns2 a { width: 100%; height: 38px; line-height: 38px; font-size: 15px; }
+.btnSns2 a:after { content: ""; width: 26px; height: 24px; position: absolute; left: 20px; top: 7px; background: url(../img/idConnect/IconBtns.png) -26px 0 no-repeat; }
+.btnSns2 a span { color: #00ACEC; }
+.btnSns2 a:hover span { color: #4AC3F1; }
+.btnSns2 a:hover:after { background: url(../img/idConnect/IconBtns.png) -26px -24px no-repeat; }
+.btnSns3 a { width: 100%; height: 38px; line-height: 38px; font-size: 15px; }
+.btnSns3 a:after { content: ""; width: 26px; height: 24px; position: absolute; left: 20px; top: 7px; background: url(../img/idConnect/IconBtns.png) -52px 0 no-repeat; }
+.btnSns3 a span { color: #C19835; }
+.btnSns3 a:hover span { color: #DCC388; }
+.btnSns3 a:hover:after { background: url(../img/idConnect/IconBtns.png) -52px -24px no-repeat; }
+.btnSns4 a { width: 100%; height: 38px; line-height: 38px; font-size: 15px; }
+.btnSns4 a:after { content: ""; width: 26px; height: 24px; position: absolute; left: 20px; top: 7px; background: url(../img/idConnect/IconBtns.png) -78px 0 no-repeat; }
+.btnSns4 a span { color: #DD4B39; }
+.btnSns4 a:hover span { color: #E57F72; }
+.btnSns4 a:hover:after { background: url(../img/idConnect/IconBtns.png) -78px -24px no-repeat; }
+.btnSns5 a { width: 100%; height: 38px; line-height: 38px; font-size: 15px; }
+.btnSns5 a:after { content: ""; width: 26px; height: 24px; position: absolute; left: 20px; top: 7px; background: url(../img/idConnect/IconBtns.png) -104px 0 no-repeat; }
+.btnSns5 a span { color: #ff0000; }
+.btnSns5 a:hover span { color: #ff5761; }
+.btnSns5 a:hover:after { background: url(../img/idConnect/IconBtns.png) -104px -24px no-repeat; }
+
+.SNSLoginS .btnSns1 a { width: 135px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS .btnSns1 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) 0 0 no-repeat; }
+.SNSLoginS .btnSns1 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) 0 -18px no-repeat; }
+.SNSLoginS .btnSns2 a { width: 135px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS .btnSns2 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -20px 0 no-repeat; }
+.SNSLoginS .btnSns2 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -20px -18px no-repeat; }
+.SNSLoginS .btnSns3 a { width: 135px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS .btnSns3 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -40px 0 no-repeat; }
+.SNSLoginS .btnSns3 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -40px -18px no-repeat; }
+.SNSLoginS .btnSns4 a { width: 135px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS .btnSns4 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -61px 0 no-repeat; }
+.SNSLoginS .btnSns4 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -61px -18px no-repeat; }
+.SNSLoginS .btnSns5 a { width: 135px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS .btnSns5 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -82px 0 no-repeat; }
+.SNSLoginS .btnSns5 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -82px -18px no-repeat; }
+
+.SNSLoginS .btnSns6 a { width: 135px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS .btnSns6 a:after { content: ""; width: 22px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -102px 0 no-repeat; }
+.SNSLoginS .btnSns6 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -102px -18px no-repeat; }
+
+.SNSLoginS2 { text-align:center; margin: 0 auto;}
+.SNSLoginS2 .btnSns1 a { width: 160px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS2 .btnSns1 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) 0 0 no-repeat; }
+.SNSLoginS2 .btnSns1 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) 0 -18px no-repeat; }
+.SNSLoginS2 .btnSns2 a { width: 160px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS2 .btnSns2 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -20px 0 no-repeat; }
+.SNSLoginS2 .btnSns2 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -20px -18px no-repeat; }
+.SNSLoginS2 .btnSns3 a { width: 160px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS2 .btnSns3 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -40px 0 no-repeat; }
+.SNSLoginS2 .btnSns3 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -40px -18px no-repeat; }
+.SNSLoginS2 .btnSns4 a { width: 160px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS2 .btnSns4 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -61px 0 no-repeat; }
+.SNSLoginS2 .btnSns4 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -61px -18px no-repeat; }
+.SNSLoginS2 .btnSns5 a { width: 160px; height: 34px; padding-left: 25px; line-height: 34px; font-size: 13px; }
+.SNSLoginS2 .btnSns5 a:after { content: ""; width: 20px; height: 18px; position: absolute; left: 9px; top: 8px; background: url(../img/idConnect/IconSNSBtns.png) -82px 0 no-repeat; }
+.SNSLoginS2 .btnSns5 a:hover:after { background: url(../img/idConnect/IconSNSBtns.png) -82px -18px no-repeat; }
+
+
+/* 4-5 form
+-----------------------------------------*/
+.ipt1 { border: 1px solid #C5C6CF; line-height: 14px; height: 22px; padding: 3px 5px; background: #fff; border-radius: 5px; width: 125px; }
+.ipt1Wid250 { width: 242px; }
+.ipt1Wid300 { width: 292px; }
+.ipt1Wid330 { width: 322px; }
+
+/* box */
+.boxUnit1 { margin: 0 auto; background-color: #FFF; border: 1px solid #CECFD7; border-radius: 7px; box-shadow: 1px 1px 2px rgba(0,0,0,0.3); width: 870px; position:relative; }
+
+/* 5 page
+******************************************/
+
+/* 15 */
+.boxLogin1 { width: 390px; font-size: 12px; margin: 0 auto; background-color: #FFF; border: 1px solid #CECFD7; border-radius: 7px; box-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+.boxLogin1_2 { width: 390px; font-size: 12px; margin: 0 auto; background-color: #FFF; border: 1px solid #e0ddcf; border-radius: 7px; box-shadow:none;}
+.boxLogin1 .sct1 { padding: 30px; }
+.boxLogin1 .sct1 h3 { clear: both; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
+.boxLogin1 .sct1 p.attention { clear: both; font-weight: bold; margin-bottom: 10px; color: #FF0000; }
+.boxLogin1 .sct1 ul { padding: 0 10px 20px 10px; margin-bottom: 15px; }
+.boxLogin1 .sct1 li { margin-bottom: 10px; }
+.boxLogin1 .sct1 dt { padding-bottom: 3px; color: #666666; }
+.boxLogin1 .sct1 dd { padding-bottom: 10px; }
+.boxLogin1 .sct1 dd input { padding: 0 5px; color: #999999; background-color: #FFF; border: 1px solid #CECFD7; border-radius: 4px; width: 315px; height: 30px; }
+.boxLogin1 .sct1 dd input[type="text"] { color: #333; }
+.boxLogin1 .sct1 dd input:focus { color: #000; }
+.boxLogin1 .sct1 .btnbox { text-align: center; padding-top: 10px; }
+.boxLogin1 .sct1 .btnbox span { display: inline-block; margin-top: 10px; }
+/* 19 */
+.boxRegisterIntro1 { }
+.boxRegisterIntro1 .left1 { float: left; width: 530px; }
+.boxRegisterIntro1 .left1 .ttlLt1 { margin: 0 30px 20px; border-bottom: 1px solid #CECFD7; padding: 20px 0 10px; font-size: 28px; font-weight: bold; color: #000; text-align: center; }
+.boxRegisterIntro1 .left1 .txtLt1 { margin: 0 0 10px; padding: 20px 20px 0 180px; }
+.boxRegisterIntro1 .left1 .ttlLt1_1 { font-size: 14px; color: #000; font-weight: bold; margin: 0 0 5px; }
+.boxRegisterIntro1 .left1 .txtLt1_1 { background: url(../img/idConnect/BgLt1_1.jpg) 31px 0 no-repeat; min-height: 80px; }
+.boxRegisterIntro1 .left1 .txtLt1_2 { background: url(../img/idConnect/BgLt1_2.jpg) 31px 10px no-repeat; min-height: 80px; }
+.boxRegisterIntro1 .left1 .txtLt1_3 { background: url(../img/idConnect/BgLt1_3.jpg) 40px 25px no-repeat; min-height: 80px; }
+.boxRegisterIntro1 .left1 .txt1 { font-size: 12px; color: #666; line-height:1.4;}
+.boxRegisterIntro1 .right1 { float: right; width: 390px; margin: 30px 30px 5px 0; }
+.boxRegisterIntro1 .right1W1 { background: #F4F4F7; border-radius: 5px; padding: 25px 30px 0; margin-bottom: 5px; }
+.boxRegisterIntro1 .ttlRt1 { margin-bottom: 30px; text-align: center; }
+.boxRegisterIntro1 .ttlRt1 span { display: inline-block; background: url(../img/idConnect/IconFree1.gif) 0 0 no-repeat; line-height: 42px; padding-left: 46px; font-size: 28px; font-weight: bold; }
+.boxRegisterIntro1 .ttlRt1_1 { font-weight: bold; font-size: 14px; }
+.boxRegisterIntro1 .sec1 { padding-bottom: 20px; border-bottom: 1px solid #CECFD7; margin-bottom: 20px; }
+.boxRegisterIntro1 .btnSet1 { padding-top: 10px; }
+.boxRegisterIntro1 .btnSet1 li { width: 160px; float: left; margin-bottom: 10px; }
+.boxRegisterIntro1 .sec2 { height: 90px; }
+.boxRegisterIntro1 .sec3 { height: 150px; }
+
+.boxRegisterIntro1 .connect { border-top:1px solid #CECFD7; margin-top:20px; padding:20px 30px 0 30px; }
+.boxRegisterIntro1 .connectW1 { background:#F4F4F7; padding:15px 0 15px 15px; border-radius:5px;}
+.boxRegisterIntro1 .left2 { float: left; width: 460px; }
+
+.boxRegisterIntro1 .ttlLt1 { margin-bottom: 30px; text-align: center; }
+.boxRegisterIntro1 .ttlLt1 span { display: inline-block; background: url(../img/idConnect/IconFree1.gif) 0 0 no-repeat; line-height: 42px; padding-left: 46px; font-size: 28px; font-weight: bold; }
+.boxRegisterIntro1 .ttlLt1_1 { font-weight: bold; font-size: 14px; }
+.boxRegisterIntro1 .left2 { float: left; width: 390px; margin: 30px; }
+.boxRegisterIntro1 .left2W1 { background: #F4F4F7; border-radius: 5px; padding: 25px 30px 0; margin-bottom: 5px; }
+
+.boxUnit1 .bmLink1 { position:absolute; bottom:35px; right:30px; font-size: 12px; }
+
+
+/* 20 */
+.boxRegist1 { width: 390px; font-size: 12px; margin: 0 auto; background-color: #FFF; border: 1px solid #CECFD7; border-radius: 7px; box-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+.boxRegist1 .sct1 { padding: 30px; }
+.boxRegist1 .sct1 p { background: url(../img/idConnect/IconRegister1.gif) 0 50% no-repeat; min-height: 45px; padding: 0 0 0 50px; }
+
+.tbl1 { clear: both; border-collapse: separate; width: 100%; background-color: #fff; border: 1px solid #ccc; border-radius: 7px; box-shadow: 0 1px 1px #ccc; border-spacing: 0;}
+.tbl1 td, table.tbl1 th { border-left: 1px solid #ccc; border-bottom: 1px solid #ccc; text-align: left; vertical-align: middle; }
+.tbl1 td:first-child, table.tbl1 th:first-child { border-left: none; }
+.tbl1 tr:first-child th:first-child { border-radius: 7px 0 0 0; }
+.tbl1 tr:first-child td:last-child { border-radius: 0 7px 0 0; }
+.tbl1 tr:last-child th:first-child { border-radius: 0 0 0 7px; }
+.tbl1 tr:last-child td:last-child { border-radius: 0 0 7px 0; }
+.tbl1 th { color: #333; padding: 0 30px; box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; border-top: none; text-shadow: 0 1px 0 rgba(255,255,255,.5); }
+.tbl1 .detail1 { font-size: 13px; color: #000; padding: 15px; }
+.tbl1 .detail2 { font-size: 13px; color: #000; padding: 10px 90px 10px 10px; position: relative; }
+.tbl1 td .detail2 span.text1 { display: block; margin: 5px 0; color: #666; font-size: 11px; }
+.tbl1 td .detail1 .inputSet1 li, .tbl1 td .detail2 .inputSet1 li { margin-bottom: 10px; }
+.tbl1 td .detail2 p.edit1 { position: absolute; right: 15px; top: 50%; margin-top: -0.7em; }
+.tbl1 td .checkList1 li {display: inline-block; width: 142px;}
+.tbl1 th.bg1 { padding: 10px; background-color: #F8F8FA; color: #666; }
+.tbl1 th.bg2 { padding: 0 30px; background-color: #F8F8FA; color: #666; }
+.tbl1 td.on { background: #FFFCF0; }
+.tbl1 th img, .tbl1 th img+span { display: inline-block; vertical-align: middle;}
+.boxRule1 { border: 1px solid #CECFD7; padding: 10px; height: 60px; overflow-y: auto; border-radius: 5px; margin-bottom: 20px; }
+.SDTtl2 { border-bottom: 2px solid #ccc;}
