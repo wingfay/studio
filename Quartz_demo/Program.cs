@@ -2,6 +2,7 @@
 using Quartz.Impl;
 using System;
 using System.Collections.Specialized;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,6 @@ namespace Quartz_demo
         static void Main(string[] args)
         {
             var task = RunProgram().GetAwaiter();
-
 
             var i =  task.GetResult();
 
@@ -89,8 +89,8 @@ namespace Quartz_demo
             //Trigger.Key：标识Trigger的唯一ID
 
 
-            await Console.Out.WriteLineAsync($"1,现在时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}，" +
-                $"工作明细：{context.JobDetail.Key.Name}，工作触发器：{context.Trigger.Key.Name}");
+            await Console.Out.WriteLineAsync($"1,Date Now：{DateTime.Now:yyyy-MM-dd HH:mm:ss}，" +
+                $"work Detail：{context.JobDetail.Key.Name}，work trigger：{context.Trigger.Key.Name}");
 
             
         }
@@ -105,10 +105,11 @@ namespace Quartz_demo
 
         public async Task Execute(IJobExecutionContext context)
         {
-            //获得值的方式：1、通过IJobExecutionContext.JobDetail.JobDataMap["Key"]获得所对应的值
-            string value1 = (string)context.JobDetail.JobDataMap["Title"];
+         //获得值的方式：1、通过IJobExecutionContext.JobDetail.JobDataMap["Key"]获得所对应的值
+         string value1 = (string)context.JobDetail.JobDataMap["Title"];
             //获得值的方式：2、也可以通过IJobExecutionContext.MergedJobDataMap["Key"]获得所对应的值
             double value2 = (double)context.MergedJobDataMap["Pi"];
+
             await Console.Out.WriteLineAsync($"2,现在时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}，" +
                 $"Title：{value1}，Pi：{value2}，CNXY：{Cnxy}");
 

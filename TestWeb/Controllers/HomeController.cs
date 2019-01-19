@@ -8,12 +8,37 @@ using System.Net.Http;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-
+using NPOI.XWPF.UserModel;
 
 namespace TestWeb.Controllers
 {
-    public class HomeController : Controller
-    {
+   public class HomeController : Controller
+   {
+
+      public byte[] CreateWordDocument()
+         {
+                  XWPFDocument doc = new XWPFDocument();
+
+         XWPFParagraph p1 = doc.CreateParagraph();
+    
+
+            XWPFRun r1 = p1.CreateRun();
+            r1.SetText("The quick brown fox");
+            r1.IsBold = true;
+            r1.FontFamily = "Arial";
+            r1.SetUnderline(UnderlinePatterns.DotDotDash);
+            r1.SetTextPosition(100);
+
+         MemoryStream memoryStream = new MemoryStream();
+
+         StreamWriter wr = new StreamWriter(memoryStream);
+
+
+         //保存文档
+         doc.Write(memoryStream);
+
+         return memoryStream.ToArray();
+      }
 
       public byte[] CreateWordDocument2()
       {
@@ -52,7 +77,6 @@ namespace TestWeb.Controllers
 
    public ActionResult Index()
         {
-
             return View();
         }
 
@@ -66,10 +90,37 @@ namespace TestWeb.Controllers
          return File(byteArray, "application/ms-word", "wordtest" + ".docx");
       }
 
+
+
       public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+         string ondDriverHTML = string.Format(@"
+    <script type = 'text/javascript' >
+      function launchSaveToOneDrive() {{
+         $.getJSON('{4}GetBase64',{{ id: {5} }}, function (json) {{
+        var odOptions = {{
+                clientId: ""{1}"",
+                action: ""save"",
+                sourceInputElementId: """",
+                sourceUri: ""{2}"",
+                fileName: ""http.doc"",
+                openInNewWindow: true,
+               advanced: {{
+                   redirectUri: ""{3}""
+                 }},
+                success: function(files) {{ Util.alert(""success""); }},
+                progress: function(p) {{ /* progress handler */ }},
+                cancel: function() {{ Util.alert(""cancel""); }},
+                error: function(e) {{ Util.alert("""",e); }}
+         }}
+         OneDrive.save(odOptions);
+      }}
 
+   </script>
+   <a href='#' onclick=launchSaveToOneDrive()><img src='{0}/system/OneDrive_24px.png' /></a>
+      ", "1", "2", "2", "2", "2", "2");
+         ViewBag.Message = "Your application description page.";
+         ViewBag.d = ondDriverHTML;
             return View();
         }
 
@@ -79,5 +130,12 @@ namespace TestWeb.Controllers
 
             return View();
         }
-    }
+
+      public JsonResult GetBase64(int id)
+      {
+         var byteArray = CreateWordDocument2();
+         var Base64 = Convert.ToBase64String(byteArray);
+         return Json("data:application/ms-word;base64,0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAPgADAP7/CQAGAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAEAAAAgAAAAEAAAD+////AAAAAAAAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9////DQAAAP7///8EAAAABQAAAAYAAAAHAAAACAAAAAkAAAAKAAAACwAAAAwAAAAOAAAA/v////7/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////…",JsonRequestBehavior.AllowGet);
+      }
+   }
 }

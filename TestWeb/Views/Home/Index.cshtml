@@ -10,22 +10,55 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+        <script type="text/javascript">
+            
+            function launchSaveToOneDrive() {
+
+
+                $.getJSON("@Url.Action("GetBase64", "Home")", { id: 33 }, function (json) {
+                    console.log("Data Loaded: " + json);
+
+                    var odOptions = {
+                        clientId: "76eac9e6-f38a-4d5f-a88b-38c1f51ddef9",
+                        action: "save",
+                        sourceInputElementId: "",
+                        sourceUri: json,
+                        fileName: "cat title.doc",
+                        openInNewWindow: true,
+                        advanced: {},
+                        success: function (files) {
+                            console.log(files)
+                        },
+                        progress: function (p) { console.log(e) },
+                        cancel: function () { /* cancel handler */ },
+                        error: function (e) { console.log(e); }
+                    }
+
+                    OneDrive.save(odOptions);
+                });
+
+            }
+
+
+        function launchOneDrivePicker() {
+            var odOptions = {
+                clientId: "2b68c072-879f-4c18-b12a-a4719c970c92",
+                action: "query",
+                multiSelect: true,
+                advanced: {},
+                success: function (files) { /* success handler */ },
+                cancel: function () { /* cancel handler */ },
+                error: function (e) { /* error handler */ }
+            }
+            OneDrive.open(odOptions);
+        }
+        </script>
+        }
+
+        <input id="fileUploadControl" name="fileUploadControl" type="file" />
+        <button onclick="launchSaveToOneDrive()">Save to OneDrive</button>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+
 </div>

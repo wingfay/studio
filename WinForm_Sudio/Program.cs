@@ -16,7 +16,7 @@ namespace WinForm_Sudio
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormPdf());
+            Application.Run(new Form1());
         }
     }
 }
