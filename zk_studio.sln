@@ -43,6 +43,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Add_DLL", "Add_DLL", "{AFDC
 	ProjectSection(SolutionItems) = preProject
 		Add_DLL\Aspose.Slides.dll = Add_DLL\Aspose.Slides.dll
 		Add_DLL\eSELECTplus_dotNet_API.dll = Add_DLL\eSELECTplus_dotNet_API.dll
+		Add_DLL\FreeSpire.Doc.6.3\lib\net40\Spire.Doc.dll = Add_DLL\FreeSpire.Doc.6.3\lib\net40\Spire.Doc.dll
+		Add_DLL\FreeSpire.Doc.6.3\lib\net40\Spire.License.dll = Add_DLL\FreeSpire.Doc.6.3\lib\net40\Spire.License.dll
+		Add_DLL\FreeSpire.Doc.6.3\lib\net40\Spire.Pdf.dll = Add_DLL\FreeSpire.Doc.6.3\lib\net40\Spire.Pdf.dll
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "Helper\Helper.csproj", "{000F1670-1A83-43DC-B794-0CEC1049B135}"
@@ -50,6 +53,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWeb", "TestWeb\TestWeb.csproj", "{87B8665E-F8F7-40BA-9466-A7D4DD6A7104}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRSimple", "SignalRSimple\SignalRSimple.csproj", "{C9D584B5-80F4-4CDE-8801-B4F8167A34A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQL2Word", "SQL2Word\SQL2Word.csproj", "{382C28D2-94C4-44AB-B543-AF54910BB535}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +126,10 @@ Global
 		{C9D584B5-80F4-4CDE-8801-B4F8167A34A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D584B5-80F4-4CDE-8801-B4F8167A34A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9D584B5-80F4-4CDE-8801-B4F8167A34A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{382C28D2-94C4-44AB-B543-AF54910BB535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382C28D2-94C4-44AB-B543-AF54910BB535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382C28D2-94C4-44AB-B543-AF54910BB535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382C28D2-94C4-44AB-B543-AF54910BB535}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
