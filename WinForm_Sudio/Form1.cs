@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -102,6 +103,28 @@ namespace WinForm_Sudio
 
       }
 
+      private void button6_Click(object sender, EventArgs e)
+      {
+         if (openFileDialog1.ShowDialog() == DialogResult.OK)
+         {
+            textBox1.Text = openFileDialog1.FileName;
+
+
+            using (var md5 = MD5.Create())
+            {
+               using (var stream = File.OpenRead(openFileDialog1.FileName))
+               {
+                  long length = new System.IO.FileInfo(openFileDialog1.FileName).Length;
+                  textBox3.Text = length.ToString();
+                  var hash = md5.ComputeHash(stream);
+                  textBox2.Text= BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+
+               }
+            }
+
+            
+         }
+      }
    }
 
    public static class EncryptHelper
