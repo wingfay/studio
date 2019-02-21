@@ -17,7 +17,7 @@ namespace WinForm_Sudio
    //生成Table 模版文档
    public partial class FormSQL : Form
    {
-      string strConnectionString = @"server=192.168.21.94;database=ILS;uid=sa;pwd=design";
+      string strConnectionString = @"server=IP;database=DataBaseName;uid=sa;pwd=sa";
       public FormSQL()
       {
          InitializeComponent();
