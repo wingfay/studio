@@ -1,0 +1,29 @@
+{
+        "services": [{
+                "ID": "ServiceA",
+                "Name": "ServiceA",
+                "Tags": [
+                    "ServiceAWebApi", "Api"
+                ],
+                "Address": "localhost",
+                "Port": 65398,
+                "Check": {
+                    "HTTP": "http://localhost:65398/Api/health",
+                    "Interval": "10s"
+                }
+            }, {
+                "id": "ServiceB",
+                "name": "ServiceB",
+                "tags": [
+                    "ServiceBWebApi","Api"
+                ],
+                "Address": "localhost",
+                "Port": 1758,
+                "Check": [{
+                        "HTTP": "http://localhost:1758/Api/health",
+                        "Interval": "10s"
+                    }
+                ]
+            }
+        ]
+    }

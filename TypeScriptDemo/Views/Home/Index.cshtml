@@ -2,6 +2,31 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+<script type="text/javascript">
+    function launchSaveToSchoology() {
+        alert("asdfsadf");
+        $.post("@Url.Action("ShareToSchoology")", { id: 100445, title: "Hxj 20171011 01 0001 A'test %^&* #" }, function (data) {
+            console.log("data:" + data);
+            if (data.Message) {
+                alert(data.Message);
+            }
+            else {
+                alert("Shared successfully.");
+            }
+
+        });
+    }
+
+</script>
+
+
+
+<div>
+
+    <button onclick="launchSaveToSchoology()">asdfsadfsadf</button>
+</div>
+
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

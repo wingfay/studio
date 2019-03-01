@@ -15,6 +15,11 @@ namespace TypeScriptDemo.Controllers
             return View();
         }
 
+      public IActionResult ShareToSchoology(int Id, string Title)
+      {
+         return Json(true);
+      }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

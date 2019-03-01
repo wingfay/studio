@@ -1,0 +1,38 @@
+﻿https://github.com/SoMeDay-Zhang/GatewayAuthentication
+.NET Core + Ocelot + IdentityServer4 + Consul 基础架构实现
+先决条件
+
+    关于 Ocelot
+        针对使用 .NET 开发微服务架构或者面向服务架构提供一个统一访问系统的组件。 参考
+        本文将使用 Ocelot 构建统一入口的 Gateway。
+    关于 IdentityServer4
+        IdentityServer4 是一个 OpenID Connect 和 OAuth 2.0 框架用于 ASP.NET Core 。IdentityServer4 在你的应用程序中集成了基于令牌认证、单点登录、API访问控制所需的所有协议和扩展点。参考
+        本文将使用 IdentityServer4 搭建独立认证服务器。
+    关于 Consul
+        Consul 是一个服务网格解决方案，通过服务发现、配置、功能分割提供一个全功能的控制层。这些功能可以单独使用，也可以同时使用以形成一个完整的网格服务。参考
+        本文将使用 Consul 注册多个服务。
+    关于 .Net Core
+        将使用 WebApi 构建多个服务
+
+
+
+启动服务
+1.IdentityServer  认证服务
+2.启动 ServiceA和 ServiceB 
+3.启动网关 ApiGateway
+4.启动 consul 服务
+
+		
+
+使用 Chocoletey 安装 Consul，
+
+choco install consul
+
+
+
+
+将 GatewayAuthenticationConfig 文件夹复制到D盘  在文件夹名上shift+右键 打开命令窗口
+
+启动 consul 服务
+
+consul agent -dev -config-dir=./consul.d
