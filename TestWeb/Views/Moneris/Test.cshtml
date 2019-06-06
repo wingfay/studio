@@ -1,0 +1,17 @@
+﻿@model eCommerceExample.Models.TransactionResponse
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+
+
+
+@if (Model != null)
+{
+    foreach (System.Reflection.PropertyInfo p in Model.GetType().GetProperties())
+    {
+        <p>@p.Name : @p.GetValue(Model)</p>
+    }
+    
+}

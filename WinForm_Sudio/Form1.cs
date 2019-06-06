@@ -29,15 +29,51 @@ namespace WinForm_Sudio
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string strBool = "dsftrue234";
+         // string strBool = "dsftrue234";
 
-           // MessageBox.Show(strBool.GetBool().ToString());
+         //// MessageBox.Show(strBool.GetBool().ToString());
 
-            MessageBox.Show(strBool.GetInt().ToString());
+         // MessageBox.Show(strBool.GetInt().ToString());
 
-        }
 
-        private void button2_Click(object sender, EventArgs e)
+         MessageBox.Show(toCurrency(856));
+         MessageBox.Show(toCurrency(540));
+         MessageBox.Show(toCurrency(100));
+         MessageBox.Show(toCurrency(987));
+         MessageBox.Show(toCurrency(270));
+         MessageBox.Show(toCurrency(70));
+
+         MessageBox.Show(toCurrency(77));
+
+
+
+      }
+
+      private string toCurrency(int Amount)
+      {
+         var strAmout = (Amount / 100d).ToString();
+
+         var currency = strAmout.Split('.')[0];
+
+         if (strAmout.IndexOf(".") > 0)
+         {
+            currency = strAmout.Split('.')[0];
+
+            currency += "." + strAmout.Split('.')[1].Substring(0, strAmout.Split('.')[1].Length > 2 ? 2 : strAmout.Split('.')[1].Length);
+         }
+         else
+         {
+            currency = strAmout;
+         }
+
+
+         
+
+         return currency;
+
+      }
+
+      private void button2_Click(object sender, EventArgs e)
         {
             BusinessHandler handler = new BusinessHandler();
             handler.DoSomething();

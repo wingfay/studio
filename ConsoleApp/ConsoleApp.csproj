@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ConsoleApp</RootNamespace>
     <AssemblyName>ConsoleApp</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="eSELECTplus_dotNet_API">
       <HintPath>..\Add_DLL\eSELECTplus_dotNet_API.dll</HintPath>
@@ -46,7 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="eCommerceExample\CA\TestCanadaIDebitPurchase.cs" />
+    <Compile Include="eCommerceExample\CA\TestCanadaIDebitRefund.cs" />
     <Compile Include="eCommerceExample\CA\TestCanadaPurchase.cs" />
+    <Compile Include="eCommerceExample\Models\BaseClass.cs" />
+    <Compile Include="eCommerceExample\Models\Merchant.cs" />
+    <Compile Include="eCommerceExample\Models\Purchase.cs" />
+    <Compile Include="eCommerceExample\Models\Transaction.cs" />
+    <Compile Include="eCommerceExample\Models\TransactionBase.cs" />
+    <Compile Include="eCommerceExample\Models\TransactionResponse.cs" />
+    <Compile Include="eCommerceExample\MonerisTransacton.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
