@@ -60,11 +60,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GatewayAuthentication", "Ga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "GatewayAuthentication\IdentityServer\IdentityServer.csproj", "{B22D218A-D0EA-4C39-8403-92319AC1C3B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceA", "GatewayAuthentication\ServiceA\ServiceA.csproj", "{3E91F1EE-9B6F-445B-B870-B2242B9B7B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceA", "GatewayAuthentication\ServiceA\ServiceA.csproj", "{3E91F1EE-9B6F-445B-B870-B2242B9B7B4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceB", "GatewayAuthentication\ServiceB\ServiceB.csproj", "{45A159A6-7CB8-4355-B7B5-E4E6E8C83AEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceB", "GatewayAuthentication\ServiceB\ServiceB.csproj", "{45A159A6-7CB8-4355-B7B5-E4E6E8C83AEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "GatewayAuthentication\ApiGateway\ApiGateway.csproj", "{40FFBDF3-E2F7-4425-85E5-70403A84D5F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "GatewayAuthentication\ApiGateway\ApiGateway.csproj", "{40FFBDF3-E2F7-4425-85E5-70403A84D5F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThunderDownloadDemo", "ThunderDownloadDemo\ThunderDownloadDemo.csproj", "{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,6 +158,10 @@ Global
 		{40FFBDF3-E2F7-4425-85E5-70403A84D5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40FFBDF3-E2F7-4425-85E5-70403A84D5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40FFBDF3-E2F7-4425-85E5-70403A84D5F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
