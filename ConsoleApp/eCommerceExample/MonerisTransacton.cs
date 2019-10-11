@@ -50,18 +50,22 @@ namespace eCommerceExample
                IOP_Txn.SetIdebitTrack2(t.Track2);
                mpgReq.SetTransaction(IOP_Txn);
 
-
-
                break;
             case Transaction.TransactionType.Refund:
-               break;
-            case Transaction.TransactionType.InteracOnlineRefund:
-
-               IDebitRefund refund = new IDebitRefund();
+               Refund refund = new Refund();
                refund.SetOrderId(t.OrderId);
                refund.SetAmount(t.Amount);
                refund.SetTxnNumber(t.TxnNumber);
+               refund.SetCryptType(t.CrtpyType);
                mpgReq.SetTransaction(refund);
+               break;
+            case Transaction.TransactionType.InteracOnlineRefund:
+
+               IDebitRefund debitRefund = new IDebitRefund();
+               debitRefund.SetOrderId(t.OrderId);
+               debitRefund.SetAmount(t.Amount);
+               debitRefund.SetTxnNumber(t.TxnNumber);
+               mpgReq.SetTransaction(debitRefund);
 
                break;
             case Transaction.TransactionType.CardVerification:

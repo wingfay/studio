@@ -95,6 +95,29 @@ namespace eCommerceExample.Models
 
       public CustInfo CustomerInfo { get; set; }
 
+      /// <summary>
+      /// Supported values are:
+      ///1 - Mail Order / Telephone Order—Single
+      ///2 - Mail Order / Telephone Order—Recurring
+      ///3 - Mail Order / Telephone Order—Instalment
+      ///4 - Mail Order / Telephone Order—Unknown classification
+      ///5 - Authenticated e-commerce transaction(VBV)
+      ///6 - Non-authenticated e-commerce transaction(VBV)
+      ///7 - SSL-enabled merchant
+      ///8 - Non-secure transaction(web- or email-based)
+      ///9 - SET non-authenticated transaction
+      /// </summary>
+      public string CrtpyType { get; set; }
+
+      /// <summary>
+      /// Merchant defined description sent on a per-transaction basis that will appear on the credit card statement. 
+      /// Dependent on the card Issuer, the statement will typically show 
+      /// the dynamic descriptor appended to the merchant's existing business name separated by the "/" character.  
+      /// Please note that the combined length of the merchant's business name, 
+      /// forward slash "/" character, and the dynamic descriptor may not exceed 22 characters.
+      /// </summary>
+      public string DynamicDes;
+
 
 
       public enum TransactionType

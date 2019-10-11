@@ -37,7 +37,7 @@
          // 
          // button1
          // 
-         this.button1.Location = new System.Drawing.Point(126, 96);
+         this.button1.Location = new System.Drawing.Point(12, 12);
          this.button1.Name = "button1";
          this.button1.Size = new System.Drawing.Size(75, 23);
          this.button1.TabIndex = 0;
@@ -47,17 +47,17 @@
          // 
          // textBox1
          // 
-         this.textBox1.Location = new System.Drawing.Point(115, 191);
+         this.textBox1.Location = new System.Drawing.Point(115, 113);
          this.textBox1.Multiline = true;
          this.textBox1.Name = "textBox1";
-         this.textBox1.Size = new System.Drawing.Size(435, 185);
+         this.textBox1.Size = new System.Drawing.Size(435, 256);
          this.textBox1.TabIndex = 1;
          // 
          // btnTable2Word
          // 
-         this.btnTable2Word.Location = new System.Drawing.Point(396, 96);
+         this.btnTable2Word.Location = new System.Drawing.Point(427, 64);
          this.btnTable2Word.Name = "btnTable2Word";
-         this.btnTable2Word.Size = new System.Drawing.Size(75, 23);
+         this.btnTable2Word.Size = new System.Drawing.Size(123, 43);
          this.btnTable2Word.TabIndex = 2;
          this.btnTable2Word.Text = "生成";
          this.btnTable2Word.UseVisualStyleBackColor = true;
@@ -65,15 +65,15 @@
          // 
          // txtTableName
          // 
-         this.txtTableName.Location = new System.Drawing.Point(396, 70);
+         this.txtTableName.Location = new System.Drawing.Point(178, 28);
          this.txtTableName.Name = "txtTableName";
-         this.txtTableName.Size = new System.Drawing.Size(100, 20);
+         this.txtTableName.Size = new System.Drawing.Size(372, 20);
          this.txtTableName.TabIndex = 3;
          // 
          // label1
          // 
          this.label1.AutoSize = true;
-         this.label1.Location = new System.Drawing.Point(332, 70);
+         this.label1.Location = new System.Drawing.Point(129, 31);
          this.label1.Name = "label1";
          this.label1.Size = new System.Drawing.Size(31, 13);
          this.label1.TabIndex = 4;
@@ -83,7 +83,7 @@
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(800, 450);
+         this.ClientSize = new System.Drawing.Size(561, 375);
          this.Controls.Add(this.label1);
          this.Controls.Add(this.txtTableName);
          this.Controls.Add(this.btnTable2Word);

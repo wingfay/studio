@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
+using eCommerceExample;
 using eCommerceExample.CA;
+using eCommerceExample.Models;
 
 namespace ConsoleApp
 {
@@ -33,17 +36,42 @@ namespace ConsoleApp
          //}
 
 
-         string s = "999998.12";
+         //string s = "999998.12";
 
-         Console.WriteLine($"{s}:{Convert.ToInt32(s.Substring(0, s.IndexOf(".")))}");
+         //Console.WriteLine($"{s}:{Convert.ToInt32(s.Substring(0, s.IndexOf(".")))}");
 
-         string s1 = "999998";
+         //string s1 = "999998";
 
-         Console.WriteLine($"{s1}:{Convert.ToInt32(s1.Substring(0, s1.IndexOf(".")>0?s1.IndexOf("."):s1.Length))}");
+         //Console.WriteLine($"{s1}:{Convert.ToInt32(s1.Substring(0, s1.IndexOf(".")>0?s1.IndexOf("."):s1.Length))}");
 
 
+         var m = new Merchant("store5", "yesguy", Merchant.EnvironmentType.QA, Merchant.ProcessingCountryType.CA);
+
+         Transaction transaction = new Transaction
+         {
+            Merchant = m,
+            OrderId = "201907101612318560",
+            Amount = "11.00",
+            TxnNumber = "858400-0_14",
+            CrtpyType="7",
+            CurrentTransactionType = Transaction.TransactionType.Refund,
+         };
+
+         MonerisTransacton monerisTransacton = new MonerisTransacton();
+         var response = monerisTransacton.PerformTransaction(transaction);
+
+         JavaScriptSerializer jss = new JavaScriptSerializer();
+         string myJson = jss.Serialize(response);
+
+         Console.WriteLine(myJson);
 
          Console.ReadKey();
       }
-    }
+
+      public static string CreateInvoice()
+      {
+         return string.Format("{0:yyyyMMddHHmmssffff}", DateTime.Now);
+      }
+
+   }
 }

@@ -68,6 +68,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "GatewayAuthen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThunderDownloadDemo", "ThunderDownloadDemo\ThunderDownloadDemo.csproj", "{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSODEMO", "SSODEMO\SSODEMO.csproj", "{0CD9B846-C9C0-4C46-8BBB-C20ED2DE19F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -162,6 +164,10 @@ Global
 		{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BA6BE86-F3D9-4F4B-B77F-87BCEEAADD82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CD9B846-C9C0-4C46-8BBB-C20ED2DE19F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CD9B846-C9C0-4C46-8BBB-C20ED2DE19F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CD9B846-C9C0-4C46-8BBB-C20ED2DE19F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CD9B846-C9C0-4C46-8BBB-C20ED2DE19F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
