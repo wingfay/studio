@@ -119,6 +119,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -148,6 +149,12 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLDAP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLDAP.Designer.cs">
+      <DependentUpon>FormLDAP.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPdf.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLDAP.resx">
+      <DependentUpon>FormLDAP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPdf.resx">
       <DependentUpon>FormPdf.cs</DependentUpon>

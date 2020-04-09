@@ -32,7 +32,7 @@ namespace Helper.PDF
         public void AddWaterprint(string absoluteFilePath, string outputPath)
         {
             var watermarkImgPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DefaultResource", "waterMarkImg.jpeg");
-            using (var pdfDocument = new Document(absoluteFilePath))
+            using (var pdfDocument = new Aspose.Pdf.Document(absoluteFilePath))
             using (BackgroundArtifact background = new BackgroundArtifact())
             {
                 foreach (Page aPdfPage in pdfDocument.Pages)
@@ -65,7 +65,7 @@ namespace Helper.PDF
         public void InsertPage(string absoluteFilePath, string outputPath)
         {
             var insertPageImgPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DefaultResource","insertPage.jpeg");
-            using (var pdfDocument = new Document(absoluteFilePath))
+            using (var pdfDocument = new Aspose.Pdf.Document(absoluteFilePath))
             using (BackgroundArtifact background = new BackgroundArtifact())
             {
                 // Add a new page to document object
@@ -78,7 +78,7 @@ namespace Helper.PDF
 
         public void ToJpeg(string absoluteFilePath, string outputPath)
         {
-            using (var pdfDocument = new Document(absoluteFilePath))
+            using (var pdfDocument = new Aspose.Pdf.Document(absoluteFilePath))
             {
                 for(var i = 1; i < pdfDocument.Pages.Count + 1; i++)
                 {
@@ -103,7 +103,7 @@ namespace Helper.PDF
         public void ToTxt(string absoluteFilePath, string outputPath)
         {
             var txtAbsorber = new TextAbsorber();
-            using (var pdfDocument = new Document(absoluteFilePath))
+            using (var pdfDocument = new Aspose.Pdf.Document(absoluteFilePath))
             {
                 pdfDocument.Pages.Accept(txtAbsorber);
                 File.WriteAllText(outputPath, txtAbsorber.Text);
@@ -115,7 +115,7 @@ namespace Helper.PDF
             // Instantiate LoadOption object using XPS load option
 
 
-            using (var pdfDocument = new Document(absoluteFilePath))
+            using (var pdfDocument = new Aspose.Pdf.Document(absoluteFilePath))
             {
                 Aspose.Pdf.HtmlSaveOptions saveOptions = new Aspose.Pdf.HtmlSaveOptions();
                 saveOptions.FixedLayout = true;
@@ -125,5 +125,21 @@ namespace Helper.PDF
             }
 
         }
-    }
+
+      public void WordToPDF(string absoluteFilePath, string outputPath)
+      {
+         try
+         {
+            //打开word文件
+            var doc = new Aspose.Words.Document(absoluteFilePath);
+            //验证参数
+            if (doc == null) { throw new Exception("Word文件无效"); }
+            doc.Save(outputPath, Aspose.Words.SaveFormat.Pdf);//还可以改成其它格式
+         }
+         catch (Exception e)
+         {
+            throw e;
+         }
+      }
+   }
 }
