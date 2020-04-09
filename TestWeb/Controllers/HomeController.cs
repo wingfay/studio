@@ -104,59 +104,65 @@ namespace TestWeb.Controllers
       public ActionResult Index()
       {
 
-         HttpRequest httpRequest = new HttpRequest();
+         //HttpRequest httpRequest = new HttpRequest();
 
-         string ConsumerKey = "sadf";
-         string ConsumerSecret = "b2529f03bef043a27d938f1952f4625b";
-
-
-         string GetSchool = string.Format("https://api.schoology.com/v1/schools/");
+         //string ConsumerKey = "sadf";
+         //string ConsumerSecret = "b2529f03bef043a27d938f1952f4625b";
 
 
-         string OAuth = httpRequest.BuildOAuth(GetSchool, ConsumerKey, ConsumerSecret, HttpMethod.POST, SignatureTypes.PLAINTEXT);
+         //string GetSchool = string.Format("https://api.schoology.com/v1/schools/");
 
-         var resopnse =  httpRequest.Get(GetSchool, OAuth);
 
-         List<Libraries> libraries = new List<Libraries>();
-         if (resopnse.StatusCode == HttpStatusCode.OK)
+         //string OAuth = httpRequest.BuildOAuth(GetSchool, ConsumerKey, ConsumerSecret, HttpMethod.POST, SignatureTypes.PLAINTEXT);
+
+         //var resopnse =  httpRequest.Get(GetSchool, OAuth);
+
+         //List<Libraries> libraries = new List<Libraries>();
+         //if (resopnse.StatusCode == HttpStatusCode.OK)
+         //{
+         //   var oResult = JsonConvert.DeserializeObject<JObject>(resopnse.Result);
+
+         //   var s = oResult.Children();
+
+         //   foreach(var i in   oResult["school"].Children())
+         //   {
+         //      libraries.Add(new Libraries
+         //      {
+         //         ID = i["id"].ToString(),
+         //         Title = i["title"].ToString(),
+         //      });
+         //   }
+         //}
+
+         //string url = string.Format("https://api.schoology.com/v1/schools/{0}/resources", libraries[0].ID);
+
+         //string JSON = @"{
+         //             ""title"": ""Item Date Published Test 01 : site 0001"",
+         //             ""type"": ""document"",
+         //             ""attachments"": [
+         //                 {
+         //                     ""url"": ""http://localhost/Webopac2015/ItemDetail?l=All&amp;i=151847""
+         //                 }
+         //             ]
+         //         }";
+
+
+         //OAuth = httpRequest.BuildOAuth(url, ConsumerKey, ConsumerSecret, HttpMethod.POST, SignatureTypes.PLAINTEXT);
+
+
+         //string strResult = string.Empty;
+
+         //resopnse = httpRequest.PostJSON(url, OAuth, JSON);
+
+         //if(resopnse.StatusCode == HttpStatusCode.Created)
+         //{
+         //   strResult = resopnse.Result;
+         //}
+
+
+         if (Session["key"] == null)
          {
-            var oResult = JsonConvert.DeserializeObject<JObject>(resopnse.Result);
-             
-            var s = oResult.Children();
-
-            foreach(var i in   oResult["school"].Children())
-            {
-               libraries.Add(new Libraries
-               {
-                  ID = i["id"].ToString(),
-                  Title = i["title"].ToString(),
-               });
-            }
-         }
-
-         string url = string.Format("https://api.schoology.com/v1/schools/{0}/resources", libraries[0].ID);
-
-         string JSON = @"{
-                      ""title"": ""Item Date Published Test 01 : site 0001"",
-                      ""type"": ""document"",
-                      ""attachments"": [
-                          {
-                              ""url"": ""http://localhost/Webopac2015/ItemDetail?l=All&amp;i=151847""
-                          }
-                      ]
-                  }";
-
-
-         OAuth = httpRequest.BuildOAuth(url, ConsumerKey, ConsumerSecret, HttpMethod.POST, SignatureTypes.PLAINTEXT);
-
-
-         string strResult = string.Empty;
-
-         resopnse = httpRequest.PostJSON(url, OAuth, JSON);
-
-         if(resopnse.StatusCode == HttpStatusCode.Created)
-         {
-            strResult = resopnse.Result;
+            Session["key"]= Guid.NewGuid().ToString("N");
          }
 
          return View();
@@ -274,10 +280,29 @@ namespace TestWeb.Controllers
          return Json("data:application/ms-word;base64,0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAPgADAP7/CQAGAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAEAAAAgAAAAEAAAD+////AAAAAAAAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9////DQAAAP7///8EAAAABQAAAAYAAAAHAAAACAAAAAkAAAAKAAAACwAAAAwAAAAOAAAA/v////7/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////…", JsonRequestBehavior.AllowGet);
       }
 
+      [HttpPost]
+      public ActionResult EncryptByAES(string EncryptData)
+      {
 
+         Session["AESSource"] = EncryptData;
+         Session["AES"] = AESHelper.EncryptByAES(EncryptData, Session["Key"].ToString());
+         return Redirect("index");
+      }
+
+      [HttpPost]
+      public ActionResult DecryptByAES(string DecryptData)
+      {
+
+         Session["DecryptSource"] = DecryptData;
+         Session["Decrypt"] = AESHelper.DecryptByAES(DecryptData, Session["Key"].ToString());
+         return Redirect("index");
+      }
    }
 
 
+
+
+   #region auth
 
    public interface IHttpRequest
    {
@@ -1055,5 +1080,111 @@ namespace TestWeb.Controllers
       }
 
    }
+
+   #endregion
+
+   #region AES
+
+   public class AESHelper
+   {
+
+      
+      const string AES_IV = "1234567890000000";//16位    
+
+      /// <summary>  
+      /// AES加密算法  
+      /// </summary>  
+      /// <param name="input">明文字符串</param>  
+      /// <param name="key">密钥（32位）</param>  
+      /// <returns>字符串</returns>  
+      public static string EncryptByAES(string input, string key)
+      {
+         byte[] keyBytes = Encoding.UTF8.GetBytes(key.Substring(0, 32));
+         using (AesCryptoServiceProvider aesAlg = new AesCryptoServiceProvider())
+         {
+            aesAlg.Key = keyBytes;
+            aesAlg.IV = Encoding.UTF8.GetBytes(AES_IV.Substring(0, 16));
+
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+            using (MemoryStream msEncrypt = new MemoryStream())
+            {
+               using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+               {
+                  using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                  {
+                     swEncrypt.Write(input);
+                  }
+                  byte[] bytes = msEncrypt.ToArray();
+                  return ByteArrayToHexString(bytes);
+               }
+            }
+         }
+      }
+
+      /// <summary>  
+      /// AES解密  
+      /// </summary>  
+      /// <param name="input">密文字节数组</param>  
+      /// <param name="key">密钥（32位）</param>  
+      /// <returns>返回解密后的字符串</returns>  
+      public static string DecryptByAES(string input, string key)
+      {
+         byte[] inputBytes = HexStringToByteArray(input);
+         byte[] keyBytes = Encoding.UTF8.GetBytes(key.Substring(0, 32));
+         using (AesCryptoServiceProvider aesAlg = new AesCryptoServiceProvider())
+         {
+            aesAlg.Key = keyBytes;
+            aesAlg.IV = Encoding.UTF8.GetBytes(AES_IV.Substring(0, 16));
+
+            ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+            using (MemoryStream msEncrypt = new MemoryStream(inputBytes))
+            {
+               using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, decryptor, CryptoStreamMode.Read))
+               {
+                  using (StreamReader srEncrypt = new StreamReader(csEncrypt))
+                  {
+                     return srEncrypt.ReadToEnd();
+                  }
+               }
+            }
+         }
+      }
+
+      /// <summary>
+      /// 将指定的16进制字符串转换为byte数组
+      /// </summary>
+      /// <param name="s">16进制字符串(如：“7F 2C 4A”或“7F2C4A”都可以)</param>
+      /// <returns>16进制字符串对应的byte数组</returns>
+      public static byte[] HexStringToByteArray(string s)
+      {
+         s = s.Replace(" ", "");
+         byte[] buffer = new byte[s.Length / 2];
+         for (int i = 0; i < s.Length; i += 2)
+            buffer[i / 2] = (byte)Convert.ToByte(s.Substring(i, 2), 16);
+         return buffer;
+      }
+
+      /// <summary>
+      /// 将一个byte数组转换成一个格式化的16进制字符串
+      /// </summary>
+      /// <param name="data">byte数组</param>
+      /// <returns>格式化的16进制字符串</returns>
+      public static string ByteArrayToHexString(byte[] data)
+      {
+         StringBuilder sb = new StringBuilder(data.Length * 3);
+         foreach (byte b in data)
+         {
+            //16进制数字
+            sb.Append(Convert.ToString(b, 16).PadLeft(2, '0'));
+            //16进制数字之间以空格隔开
+            //sb.Append(Convert.ToString(b, 16).PadLeft(2, '0').PadRight(3, ' '));
+         }
+         return sb.ToString();
+      }
+   }
+
+   #endregion
+
+
 
 }

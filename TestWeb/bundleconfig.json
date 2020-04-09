@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "Scripts/jquery.cookie.min.min.js",
+    "inputFiles": [
+      "Scripts/jquery.cookie.min.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.cookie.min.js",
+    "inputFiles": [
+      "Scripts/jquery.cookie.js"
+    ]
+  }
+]

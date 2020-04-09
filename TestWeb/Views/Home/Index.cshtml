@@ -3,6 +3,8 @@
 }
 
 <script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
+<script src="~/Scripts/CryptoJSv3.1.2/components/core-min.js"></script>
+<script src="~/Scripts/CryptoJSv3.1.2/rollups/aes.js"></script>
 <div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
@@ -63,3 +65,138 @@
     </div>
 
 </div>
+
+<script>
+    var com = {};
+
+    com.str = {
+        _KEY: "@Session["key"]",//32位
+        _IV: "1234567890000000",//16位
+        /**************************************************************
+        *字符串加密
+        *   str：需要加密的字符串
+        ****************************************************************/
+        Encrypt: function (str) {
+            var key = CryptoJS.enc.Utf8.parse(this._KEY);
+            var iv = CryptoJS.enc.Utf8.parse(this._IV);
+
+            var encrypted = '';
+
+            var srcs = CryptoJS.enc.Utf8.parse(str);
+            encrypted = CryptoJS.AES.encrypt(srcs, key, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            return encrypted.ciphertext.toString();
+        },
+
+        /**************************************************************
+        *字符串解密
+        *   str：需要解密的字符串
+        ****************************************************************/
+        Decrypt: function (str) {
+            var key = CryptoJS.enc.Utf8.parse(this._KEY);
+            var iv = CryptoJS.enc.Utf8.parse(this._IV);
+            var encryptedHexStr = CryptoJS.enc.Hex.parse(str);
+            var srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+            var decrypt = CryptoJS.AES.decrypt(srcs, key, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+            var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+            return decryptedStr.toString();
+        }
+    }
+
+    function en() {
+        $("#enResult").val(com.str.Encrypt($("#enInput").val()));
+    }
+
+    function de() {
+        $("#deResult").val(com.str.Decrypt($("#deInput").val()));
+    }
+</script>
+<br />
+
+<div class="row alert alert-warning">
+
+    Key Value:
+    @Session["Key"]
+
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <input type="text" id="enInput" class="form-control" style="max-width:500px" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-dark" onclick="en()">加密</button>
+    </div>
+    <div class="col-md-4">
+        <input type="text" id="enResult" class="form-control" style="max-width:500px" />
+    </div>
+
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <input type="text" id="deInput" class="form-control" style="max-width:500px" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-dark" onclick="de()">解密</button>
+    </div>
+    <div class="col-md-4">
+        <input type="text" id="deResult" class="form-control" style="max-width:500px" />
+    </div>
+
+</div>
+
+<div class="row">
+    @using (Html.BeginForm("EncryptByAES", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label for="EncryptData">Data</label>
+            <input type="text" style="max-width:500px" class="form-control" id="EncryptData" name="EncryptData" placeholder="data" value="@Session["AESSource"]">
+        </div>
+        <button type="submit" class="btn btn-primary">加密</button>
+    }
+
+</div>
+@if (Session["AES"] != null)
+{
+    <div class="row alert alert-primary">
+
+        Encrypt Result:
+        @Session["AES"]
+
+    </div>
+}
+
+<div class="row">
+    @using (Html.BeginForm("DecryptByAES", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label for="DecryptData">Data</label>
+            <input type="text" style="max-width:500px" class="form-control" id="DecryptData" name="DecryptData" placeholder="data" value="@Session["DecryptSource"]">
+        </div>
+        <button type="submit" class="btn btn-primary">解密</button>
+    }
+
+</div>
+@if (Session["Decrypt"] != null)
+{
+<div class="row alert alert-primary">
+
+    Decrypt Result:
+    @Session["Decrypt"]
+
+</div>
+}
+
+
+
