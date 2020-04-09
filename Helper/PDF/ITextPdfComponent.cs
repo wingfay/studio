@@ -89,5 +89,10 @@ namespace Helper.PDF
                 }
             }
         }
-    }
+
+      public void WordToPDF(string absoluteFilePath, string outputPath)
+      {
+         throw new NotImplementedException();
+      }
+   }
 }

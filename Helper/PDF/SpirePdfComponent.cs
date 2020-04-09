@@ -107,5 +107,10 @@ namespace Helper.PDF
                 doc.SaveToFile(outputPath, FileFormat.HTML);
             }
         }
-    }
+
+      public void WordToPDF(string absoluteFilePath, string outputPath)
+      {
+         throw new NotImplementedException();
+      }
+   }
 }
