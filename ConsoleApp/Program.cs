@@ -10,39 +10,97 @@ using eCommerceExample.Models;
 using System.IO;
 using System.Xml;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Microsoft.VisualBasic.CompilerServices;
+using Microsoft.VisualBasic;
 
 namespace ConsoleApp
 {
     class Program
     {
-      class LibrarySetup
+      public class LibrarySetup
       {
          public string LibraryID { get; set; }
 
          public List<string> acronyms = new List<string>();
       }
 
+      public class TestModel
+      {
+         public string Test { get; set; }
+         public string LibraryID { get; set; }
+
+         public TestModel(string a,LibrarySetup librarySetup)
+         {
+            Test = a;
+            LibraryID = librarySetup.LibraryID;
+         }
+
+         public TestModel(string a, string LibraryID):this(a,new LibrarySetup { LibraryID =LibraryID})
+         {
+
+         }
+      }
+
       static void Main(string[] args)
         {
 
 
-         TestLibrarySetup("0001|IPAW,22N2,AAAL,AAL4-EEDT||0002|IPAW,22N2,AAAL");
+         //TestLibrarySetup("0001|IPAW,22N2,AAAL,AAL4-EEDT||0002|IPAW,22N2,AAAL");
 
-         TestLibrarySetup("0001|IPAW,22N2,AAAL,AAL4-EEDT");
-
-
-         TestLibrarySetup("0001|IPAW");
+         //TestLibrarySetup("0001|IPAW,22N2,AAAL,AAL4-EEDT");
 
 
-         TestLibrarySetup("0001|IPAW||");
+         //TestLibrarySetup("0001|IPAW");
 
 
-         TestLibrarySetup("0001|IPAW||0002");
+         //TestLibrarySetup("0001|IPAW||");
+
+
+         //TestLibrarySetup("0001|IPAW||0002");
 
 
          //TestXmlParse();
          //TestReg();
 
+
+         //System.Console.WriteLine(Operators.CompareString("aaa", "Aaa", false));
+         //System.Console.WriteLine(Operators.CompareString("aaa", "Aaa", true));
+         //System.Console.WriteLine(string.Compare("aaa","Aaa", true));
+         //System.Console.WriteLine(string.Compare("aaa", "Aaa", false));
+
+         //System.Console.WriteLine("aaa"=="Aaa"?0:1);
+
+
+         bool[] array4 = new bool[1] { true };
+
+         bool[] array5 = new bool[] { true };
+         //string test = "\r\n";
+
+
+         object a = "aaa";
+         object b = "aaa";
+
+
+         //System.Console.WriteLine(test.IndexOf("\r\n"));
+         //System.Console.WriteLine(Strings.InStr(test,"\r\n"));
+
+         System.Console.WriteLine(Operators.CompareObjectNotEqual("0",
+                     "1", TextCompare: false));
+
+         System.Console.WriteLine(Operators.OrObject(false, true));
+          System.Console.WriteLine(Operators.OrObject(false, false));
+         System.Console.WriteLine(Operators.OrObject(true, false));
+
+
+
+
+         // TestUnPaywall();
+
+         // var test = new TestModel("1", "2");
+
+         //System.Console.WriteLine($"{test.Test}:{test.LibraryID}");
 
          Console.ReadKey();
       }
@@ -313,6 +371,145 @@ namespace ConsoleApp
 
             }
          }
+      }
+
+
+
+      public static void TestUnPaywall()
+      {
+
+         IHttpRequest httpRequest = new HttpRequest();
+         //string strValue = "10.1038/nature12373";
+         string strValue = "test";
+
+         string searchURL = "https://api.unpaywall.org/v2/{0}?email=YOUR_EMAIL";
+         try
+         {
+            IResopnse resopnse = httpRequest.Get(string.Format(searchURL, strValue));
+
+           
+
+            JObject JsonData= Newtonsoft.Json.JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>(resopnse.Result);
+
+            ResultDetail resultDetail = new ResultDetail();
+
+            resultDetail.Title = JsonData["title"].ToString();
+            resultDetail.PublicationDate = JsonData["published_date"].ToString();
+            resultDetail.PublicationName = JsonData["publisher"].ToString();
+
+
+            string Authors = string.Empty;
+
+            if (JsonData["z_authors"] != null)
+            {
+               for (int i = 0; i < JsonData["z_authors"].Count(); i++)
+               {
+                  if (Authors.Length > 0)
+                  {
+                     Authors += ";";
+                  }
+
+                  Authors += JsonData["z_authors"][i]["family"].ToString();
+               }
+            }
+            resultDetail.Authors = Authors;
+
+            if (JsonData["is_oa"].ToString() == "True")
+            {
+               if (JsonData["best_oa_location"] != null)
+               {
+                  if (JsonData["best_oa_location"]["url"] != null)
+                  {
+                     resultDetail.URI = JsonData["best_oa_location"]["url"].ToString();
+                  }
+                  else if (JsonData["best_oa_location"]["url_for_pdf"] != null)
+                  {
+                     resultDetail.URI = JsonData["best_oa_location"]["url_for_pdf"].ToString();
+                  }
+               }
+            }
+
+            System.Console.WriteLine(string.Format("Title:{0};Authors:{1};URI:{2};publisher:{3};published_date{4}"
+               , resultDetail.Title, resultDetail.Authors, resultDetail.URI, resultDetail.PublicationName, resultDetail.PublicationDate));
+
+            //if (resopnse.StatusCode == System.Net.HttpStatusCode.NotFound)
+            //{
+
+            //   System.Console.WriteLine(resopnse.Result);
+            //}
+            //else
+            //{
+            //   System.Console.WriteLine(resopnse.Result);
+
+            //}
+         }
+         catch (Exception ex)
+         {
+
+            throw;
+         }
+      }
+
+
+      public class ResultDetail
+      {
+         /// <summary>
+         /// For learn 360
+         /// </summary>
+         public long ID { get; set; }
+         /// <summary>
+         /// For learn 360
+         /// </summary>
+         public string Tags { get; set; }
+         /// <summary>
+         /// For learn 360
+         /// </summary>
+         public string CopyRight { get; set; }
+         /// <summary>
+         /// For learn 360
+         /// </summary>
+         public string GradeLevels { get; set; }
+
+         public string Title { get; set; }
+         public string Titles { get; set; }
+         public string ISSN { get; set; }
+         public string Authors { get; set; }
+         public string Subjects { get; set; }
+         public string PublicationDate { get; set; }
+
+         /// <summary>
+         /// Publisher(learn 360)
+         /// </summary>
+         public string PublicationName { get; set; }
+
+         /// <summary>
+         /// Full Text/description (learn 360)
+         /// </summary>
+         public string Body { get; set; }
+
+         public string URI { get; set; }
+
+         /// <summary>
+         /// ProQuest
+         /// </summary>
+         public string ISBN { get; set; }
+
+         /// <summary>
+         /// ProQuest
+         /// </summary>
+         public string CallNo { get; set; }
+
+         /// <summary>
+         /// JSTOR
+         /// </summary>
+         public string Volume { get; set; }
+
+         public string ImageUrl { get; set; }
+
+         public string RecordString { get; set; }
+
+         public string Source { get; set; }
+
       }
    }
 }
