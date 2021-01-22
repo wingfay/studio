@@ -17,7 +17,7 @@ namespace SQL2Word
    //生成Table 模版文档
    public partial class FormSQL : Form
    {
-      string strConnectionString = @"server=IP;database=DataBaseName;uid=sa;pwd=sa";
+      string strConnectionString = @"server=192.168.21.95;database=ISIS;uid=sa;pwd=design";
       public FormSQL()
       {
          InitializeComponent();

@@ -149,6 +149,12 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFile.Designer.cs">
+      <DependentUpon>FormFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLDAP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFile.resx">
+      <DependentUpon>FormFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLDAP.resx">
       <DependentUpon>FormLDAP.cs</DependentUpon>

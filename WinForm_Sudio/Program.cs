@@ -19,7 +19,8 @@ namespace WinForm_Sudio
          //Application.Run(new Form1());
          //Application.Run(new FormSQL());
          //Application.Run(new FormPdf());
-         Application.Run(new FormLDAP());
+         //Application.Run(new FormLDAP());
+         Application.Run(new FormFile());
       }
    }
 }
