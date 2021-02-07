@@ -39,6 +39,7 @@
          this.textBox2 = new System.Windows.Forms.TextBox();
          this.textBox3 = new System.Windows.Forms.TextBox();
          this.button7 = new System.Windows.Forms.Button();
+         this.btnTestFileDelete = new System.Windows.Forms.Button();
          this.SuspendLayout();
          // 
          // button1
@@ -135,11 +136,22 @@
          this.button7.UseVisualStyleBackColor = true;
          this.button7.Click += new System.EventHandler(this.button7_Click);
          // 
+         // btnTestFileDelete
+         // 
+         this.btnTestFileDelete.Location = new System.Drawing.Point(12, 552);
+         this.btnTestFileDelete.Name = "btnTestFileDelete";
+         this.btnTestFileDelete.Size = new System.Drawing.Size(75, 23);
+         this.btnTestFileDelete.TabIndex = 10;
+         this.btnTestFileDelete.Text = "FileDeleteTest";
+         this.btnTestFileDelete.UseVisualStyleBackColor = true;
+         this.btnTestFileDelete.Click += new System.EventHandler(this.btnTestFileDelete_Click);
+         // 
          // Form1
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(954, 638);
+         this.Controls.Add(this.btnTestFileDelete);
          this.Controls.Add(this.button7);
          this.Controls.Add(this.textBox3);
          this.Controls.Add(this.textBox2);
@@ -170,6 +182,7 @@
       private System.Windows.Forms.TextBox textBox2;
       private System.Windows.Forms.TextBox textBox3;
       private System.Windows.Forms.Button button7;
+      private System.Windows.Forms.Button btnTestFileDelete;
    }
 }
 

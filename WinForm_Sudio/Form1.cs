@@ -311,6 +311,28 @@ namespace WinForm_Sudio
             MessageBox.Show(strResult);
          }
       }
+
+      private void btnTestFileDelete_Click(object sender, EventArgs e)
+      {
+         try
+         {
+            var path = "C:\\";
+            if (!Directory.Exists(path + "Test"))
+            {
+               Directory.CreateDirectory(path + "Test");
+            }
+            else
+            {
+
+               Directory.Delete(path + "Test", true);
+            }
+         }
+         catch (Exception ex)
+         {
+
+            throw ex;
+         }
+      }
    }
 
    public static class EncryptHelper

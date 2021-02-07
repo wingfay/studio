@@ -1,6 +1,6 @@
 ﻿namespace WinForm_Sudio
 {
-    partial class Form2
+    partial class FormRedis
     {
         /// <summary>
         /// Required designer variable.

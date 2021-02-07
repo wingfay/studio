@@ -71,6 +71,9 @@
     <Reference Include="fontbox-1.8.9, Version=1.8.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\pdfboxNet.1.8.9.0\lib\fontbox-1.8.9.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.30.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.30\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="IKVM.OpenJDK.Core, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
       <HintPath>..\packages\pdfboxNet.1.8.9.0\lib\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
@@ -143,17 +146,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="FormRedis.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormFile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormFile.Designer.cs">
-      <DependentUpon>FormFile.cs</DependentUpon>
+    <Compile Include="FormRedis.Designer.cs">
+      <DependentUpon>FormRedis.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLDAP.cs">
       <SubType>Form</SubType>
@@ -173,17 +170,20 @@
     <Compile Include="FormSQL.Designer.cs">
       <DependentUpon>FormSQL.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormWCAGCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWCAGCheck.Designer.cs">
+      <DependentUpon>FormWCAGCheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="linq.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormFile.resx">
-      <DependentUpon>FormFile.cs</DependentUpon>
+    <EmbeddedResource Include="FormRedis.resx">
+      <DependentUpon>FormRedis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLDAP.resx">
       <DependentUpon>FormLDAP.cs</DependentUpon>
@@ -193,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSQL.resx">
       <DependentUpon>FormSQL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormWCAGCheck.resx">
+      <DependentUpon>FormWCAGCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
