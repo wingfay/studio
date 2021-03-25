@@ -1,0 +1,472 @@
+﻿
+@{
+    ViewBag.Title = "Demo";
+}
+
+
+<style>
+   .btnCopy, .btnMail, .btnReserve, .btnText, .btnAddReview, .btnRate, .btnSaveMarc, .btnAddToFavorite, .btnClickToView, .btnAddToFavoriteExists,
+   .btnBookShelf, .btnMapLocation, .searchResult .downloadableEResource .btnWithSprite {
+      width: 150px;
+   }
+
+   .searchResult .itemList .downloadableEResource {
+      padding: 3px 7px 3px 0;
+      height: auto;
+      margin-top: 5px;
+      border-bottom: none;
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+   }
+
+   .searchResult .itemLast .downloadableEResource {
+      border-radius: 0 0 6px 6px;
+   }
+
+   .btnSearchSort img {
+      margin: 6px;
+   }
+
+   .btnSearchSort {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin-left: 3px;
+      border-radius: 6px;
+   }
+
+      .btnSearchSort[disabled='disabled'] {
+         background: #dddddd;
+      }
+
+
+   .slider li span {
+      display: none;
+   }
+
+   /*.buttonsMore .k-menu .k-item > .k-link {
+      padding:0;
+   }*/
+
+   .menuMoreItem > .k-link {
+      background-color: transparent !important;
+      height: 30px;
+      line-height: 25px !important;
+      padding: 0 !important;
+      border: 1px solid transparent !important;
+   }
+
+   .submore .k-item > .k-link {
+      padding: 0.5em !important;
+   }
+
+   .buttonsMore .k-menu .k-item > .k-link > .k-i-arrow-s {
+      width: 0px;
+      height: 0px;
+      background: none;
+      border-top: 5px solid white;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+      display: none; /*inline-block;*/
+   }
+
+   .tabs #tabLocal {
+      border-radius: 5px 0 0 5px;
+   }
+   /*huxiaojing add at 2018-08-10,Ver 8.4.1*/
+   .buttonsMore .k-popup .k-state-focused {
+      box-shadow: 0px 0px 2px grey !important;
+   }
+
+   #divSearchResult_Main {
+      width: 960px;
+   }
+
+   .fullWidth #divSearchResult_Main {
+      width: calc(100% - 20px);
+      min-width: 960px;
+   }
+
+   .fullWidth .itemListTable2 .itemInfoLi {
+      flex: 1;
+      -webkit-flex: 1;
+   }
+
+   .fullWidth .itemListTable2 .itemAuthors {
+      max-width: 100%;
+   }
+
+   .fullWidth .itemListTable2 .itemTitle /*Last modified by futao 2020-08-21 ver:8.7.0 the width of title is too long when display imgLocalNotes and imgClipboardMsg together*/ {
+      width: calc(100% - 105px);
+      max-width: calc(100% - 105);
+   }
+
+   .itemInfo .itemGridInfo {
+      flex: 0 0 150px;
+      margin: 2px 10px 7px 0;
+   }
+
+   .itemInfo .itemsGridContent {
+      flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+      padding: 5px 7px;
+   }
+
+   .itemInfo .itemGridImgContent {
+      width: 140px;
+      height: 190px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #D7D9DC;
+      padding: 5px;
+      background: #FFF;
+      text-align: center;
+   }
+
+   .itemGridInfo .itemGridImgContent a {
+      line-height: 186px;
+      display: block;
+      text-align: center;
+      height: 190px;
+      overflow: hidden;
+      padding: 0;
+   }
+
+   .itemInfo .itemGridInfo img {
+      max-width: 100%;
+      max-height: 190px;
+      vertical-align: middle;
+   }
+
+   .itemInfo .itemsGridContent .no_image_text {
+      position: absolute;
+      left: 15px;
+      width: 120px;
+      max-height: 160px;
+      line-height: 16px;
+   }
+
+   .itemGridInfo .inTag, .itemGridInfo .outTag {
+      background-image: url(/webopac2015/content/opac/images/system/button04.png);
+      background-size: 27px;
+      background-repeat: no-repeat;
+      text-align: center;
+      font-weight: bold;
+      width: 27px;
+      height: 27px;
+      color: #FFF;
+      line-height: 24px;
+   }
+
+   .itemInfo .itemsGridContent a {
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+   }
+
+   .itemInfo .itemsGridContent .normalText {
+      margin-left: 5px;
+   }
+
+      .itemInfo .itemsGridContent .normalText, .itemInfo .itemsGridContent .normalText a {
+         line-height: 18px;
+         font-weight: normal;
+      }
+
+   .itemInfo .itemsGridContent a:hover {
+      color: #000;
+      text-decoration: underline;
+   }
+
+   .itemInfo .itemsGridContent .titleInfo {
+      line-height: 18px;
+   }
+
+      .itemInfo .itemsGridContent .titleInfo label {
+         overflow: hidden;
+         /*white-space: nowrap;
+         text-overflow: ellipsis;
+         display: block;*/
+         width: 120px;
+      }
+
+   .itemGridInfo .outTag {
+      background-position: 0 0;
+   }
+
+   .itemGridInfo .inTag {
+      background-position: 0 -29px;
+   }
+
+   .itemGridInfo .callNoGrid {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex: 1;
+      -webkit-flex: 1;
+   }
+
+   .itemGridInfo .materialTypeGrid {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+   }
+
+   .itemGridInfo .itemHoverBorder {
+      position: absolute;
+      border: 3px solid #0d78e8;
+      top: 0;
+      left: 0;
+      width: calc(100% - 6px);
+      height: calc(100% - 6px);
+   }
+
+   .itemGridInfo .itemHoverContent {
+      width: 100%;
+      height: 100%;
+      /*background-color:#5A5C5D;
+      filter:alpha(opacity=90);
+      opacity:0.9;*/
+      background: rgba(90,90,90,0.7);
+      text-align: center;
+   }
+</style>
+
+<script>
+    
+
+    $(function () {
+        
+    });
+
+
+
+
+</script>
+<h2>Demo</h2>
+
+
+<div id="itemInfo" class="itemInfo">
+   <div class="flexlayout itemsGridContent">
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=50737&amp;ti=0"> <img style="" src="/Library5/images/~imageM7.jpg" alt="FROG LIFE CYCLE (K) : (NF) SCIENCE VOCABULARY READERS." title="FROG LIFE CYCLE (K) : (NF) SCIENCE VOCABULARY READERS." id="img_50737"></a>
+            <div class="no_image_text" style="top:10px;display:none;">FROG LIFE CYCLE (K) : (NF) SCIENCE VOCABULARY READERS.</div>
+
+
+
+
+
+
+
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item50737" value="50737" title="Select FROG LIFE CYCLE (K) : (NF) SCIENCE VOCABULARY READERS." data-reservebooking="R">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item50737">FROG LIFE CYCLE (K) : (NF) S...</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20JUSTIN%20MCCORY%20MARTIN&amp;c=c"> JUSTIN MCCORY MARTIN</a></div>
+         <div class="normalText">Scholastic</div>
+         <div class="normalText"></div>
+         <div class="normalText">Book</div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 0&nbsp;of&nbsp;0</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid"></div>
+            <div class="outTag">Out</div>
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=50818&amp;ti=0"> <img style="" src="/Library5/images/~imageM7.jpg" alt="FROGS (D) : SCIENCE EMERGENT READERS." title="FROGS (D) : SCIENCE EMERGENT READERS." id="img_50818"></a>
+            <div class="no_image_text" style="top:10px;display:none;">FROGS (D) : SCIENCE EMERGENT READERS.</div>
+            
+
+
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item50818" value="50818" title="Select FROGS (D) : SCIENCE EMERGENT READERS." data-reservebooking="R">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item50818">FROGS (D) : SCIENCE EMERGENT...</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20SUSAN%20CANIZARES&amp;c=c"> SUSAN CANIZARES</a></div>
+         <div class="normalText">Scholastic</div>
+         <div class="normalText"></div>
+         <div class="normalText">Book</div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 0&nbsp;of&nbsp;0</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid"></div>
+            <div class="outTag">Out</div>
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=51014&amp;ti=0"> <img style="" src="/Library5/images/~imageM7.jpg" alt="FROGS AND TOADS AND TADPOLES, TOO (G) : (NF) ROOKIE READ-ABOUT SCIENCE." title="FROGS AND TOADS AND TADPOLES, TOO (G) : (NF) ROOKIE READ-ABOUT SCIENCE." id="img_51014"></a>
+            <div class="no_image_text" style="top:10px;display:none;">FROGS AND TOADS AND TADPOLES, TOO (G) : (NF) ROOKIE READ-ABOUT SCIENCE.</div>
+           
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item51014" value="51014" title="Select FROGS AND TOADS AND TADPOLES, TOO (G) : (NF) ROOKIE READ-ABOUT SCIENCE." data-reservebooking="R">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item51014">FROGS AND TOADS AND TADPOLES...</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20ALLAN%20FOWLER&amp;c=c"> ALLAN FOWLER</a></div>
+         <div class="normalText">Scholastic</div>
+         <div class="normalText"></div>
+         <div class="normalText">Book</div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 0&nbsp;of&nbsp;0</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid"></div>
+            <div class="outTag">Out</div>
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=51036&amp;ti=0"> <img style="" src="/Library5/images/~imageM7.jpg" alt="FROGGY PLAYS SOCCER (J)" title="FROGGY PLAYS SOCCER (J)" id="img_51036"></a>
+            <div class="no_image_text" style="top:10px;display:none;">FROGGY PLAYS SOCCER (J)</div>
+            <input type="hidden" class="BrowseUrl" value="ItemDetail?l=0001&amp;i=51036&amp;ti=0"><input type="hidden" class="itemDisplayButtons" value="|Detail|ShelfList|Favorite|Reserve|Review|Location|SaveMarc|TextMe|Rate"><input type="hidden" class="itemGridID" value="51036"><input type="hidden" class="itemBelongToLibrary" value="0099">
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item51036" value="51036" title="Select FROGGY PLAYS SOCCER (J)" data-reservebooking="R">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item51036">FROGGY PLAYS SOCCER (J)</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20JONATHAN%20LONDON&amp;c=c"> JONATHAN LONDON</a></div>
+         <div class="normalText">Scholastic</div>
+         <div class="normalText"></div>
+         <div class="normalText">Book</div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 0&nbsp;of&nbsp;0</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid"></div>
+            <div class="outTag">Out</div>
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=51901&amp;ti=0"> <img style="" src="/Library5/images/~imageM7.jpg" alt="THE FROG PRINCE CONTINUED (R)" title="THE FROG PRINCE CONTINUED (R)" id="img_51901"></a>
+            <div class="no_image_text" style="top:10px;display:none;">THE FROG PRINCE CONTINUED (R)</div>
+            <input type="hidden" class="BrowseUrl" value="ItemDetail?l=0001&amp;i=51901&amp;ti=0"><input type="hidden" class="itemDisplayButtons" value="|Detail|ShelfList|Favorite|Reserve|Review|Location|SaveMarc|TextMe|Rate"><input type="hidden" class="itemGridID" value="51901"><input type="hidden" class="itemBelongToLibrary" value="0099">
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item51901" value="51901" title="Select THE FROG PRINCE CONTINUED (R)" data-reservebooking="R">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item51901">THE FROG PRINCE CONTINUED (R)</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20JON%20SCIENSZKA&amp;c=c"> JON SCIENSZKA</a></div>
+         <div class="normalText">Penguin Group</div>
+         <div class="normalText"></div>
+         <div class="normalText">Book</div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 0&nbsp;of&nbsp;0</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid"></div>
+            <div class="outTag">Out</div>
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=79581&amp;ti=0"> <img style="width:100%;" src="/Library5/images/cover/noimage.png" alt="The Frogs Wore Red Suspenders" title="The Frogs Wore Red Suspenders" id="img_79581"></a>
+            <div class="no_image_text" style="top:10px;">The Frogs Wore Red Suspenders</div>
+            <input type="hidden" class="BrowseUrl" value="ItemDetail?l=0001&amp;i=79581&amp;ti=0"><input type="hidden" class="itemDisplayButtons" value="|Detail|ShelfList|Favorite|Review|Location|SaveMarc|TextMe|Rate"><input type="hidden" class="itemGridID" value="79581"><input type="hidden" class="itemBelongToLibrary" value="0001">
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item79581" value="79581" title="Select The Frogs Wore Red Suspenders" data-reservebooking="N">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item79581">The Frogs Wore Red Suspenders</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20Jack%20Prelutsky%20%202005&amp;c=c"> Jack Prelutsky  2005</a></div>
+         <div class="normalText">Audible.com - Harper Audio - Listed in iTunes Store and Best Marc</div>
+         <div class="normalText"></div>
+         <div class="normalText"></div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 0&nbsp;of&nbsp;0</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid"></div>
+
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=110932&amp;ti=0"> <img style="width:100%;" src="/Library5/images/cover/noimage.png" alt="Frogs and kisses : Enchanted, Inc. Series, Book 8." title="Frogs and kisses : Enchanted, Inc. Series, Book 8." id="img_110932"></a>
+            <div class="no_image_text" style="top:10px;">Frogs and kisses : Enchanted, Inc. Series, Book 8.</div>
+            <input type="hidden" class="BrowseUrl" value="ItemDetail?l=0001&amp;i=110932&amp;ti=0"><input type="hidden" class="itemDisplayButtons" value="|Detail|Favorite|Review|SaveMarc|TextMe|Rate"><input type="hidden" class="itemGridID" value="110932"><input type="hidden" class="itemBelongToLibrary" value="0910">
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item110932" value="110932" title="Select Frogs and kisses : Enchanted, Inc. Series, Book 8." data-reservebooking="N">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item110932">Frogs and kisses : Enchanted...</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20Swendson%2C%20Shanna&amp;c=c"> Swendson, Shanna</a></div>
+         <div class="normalText">NLA Digital LLC</div>
+         <div class="normalText">2016.</div>
+         <div class="normalText">electronic resource</div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText"></div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid"></div>
+
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=92869&amp;ti=0"> <img style="width:100%;" src="/Library5/images/cover/noimage.png" alt="Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" title="Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" id="img_92869"></a>
+            <div class="no_image_text" style="top:10px;">Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve</div>
+            <input type="hidden" class="BrowseUrl" value="ItemDetail?l=0001&amp;i=92869&amp;ti=0"><input type="hidden" class="itemDisplayButtons" value="|Detail|ShelfList|Favorite|Reserve|Review|Location|SaveMarc|TextMe|Rate"><input type="hidden" class="itemGridID" value="92869"><input type="hidden" class="itemBelongToLibrary" value="0001">
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item92869" value="92869" title="Select Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" data-reservebooking="R">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item92869">Frog And Friends : celebrate...</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20Bunting%2C%20Eve%2C%201928-&amp;c=c"> Bunting, Eve, 1928-</a>&nbsp;&nbsp;<a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=Masse%2C%20Josee&amp;c=c">Masse, Josee</a></div>
+         <div class="normalText">Sleeping Bear</div>
+         <div class="normalText">2015.</div>
+         <div class="normalText"></div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 2&nbsp;of&nbsp;2</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid">[E]</div>
+            <div class="inTag">In</div>
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=93530&amp;ti=0"> <img style="width:100%;" src="/Library5/images/cover/noimage.png" alt="Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" title="Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" id="img_93530"></a>
+            <div class="no_image_text" style="top:10px;">Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve</div>
+            <input type="hidden" class="BrowseUrl" value="ItemDetail?l=0001&amp;i=93530&amp;ti=0"><input type="hidden" class="itemDisplayButtons" value="|Detail|ShelfList|Favorite|Reserve|Review|Location|SaveMarc|TextMe|Rate"><input type="hidden" class="itemGridID" value="93530"><input type="hidden" class="itemBelongToLibrary" value="0001">
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item93530" value="93530" title="Select Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" data-reservebooking="R">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item93530">Frog And Friends : celebrate...</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20Bunting%2C%20Eve%2C%201928-&amp;c=c"> Bunting, Eve, 1928-</a>&nbsp;&nbsp;<a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=Masse%2C%20Josee&amp;c=c">Masse, Josee</a></div>
+         <div class="normalText">Sleeping Bear</div>
+         <div class="normalText">2015.</div>
+         <div class="normalText"></div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 2&nbsp;of&nbsp;2</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid">[E]</div>
+            <div class="inTag">In</div>
+         </div>
+      </div>
+      <div class="itemGridInfo">
+         <div class="itemGridImgContent">
+            <a href="ItemDetail?l=0001&amp;i=91848&amp;ti=0"> <img style="width:100%;" src="/Library5/images/cover/noimage.png" alt="Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" title="Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" id="img_91848"></a>
+            <div class="no_image_text" style="top:10px;">Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve</div>
+            <input type="hidden" class="BrowseUrl" value="ItemDetail?l=0001&amp;i=91848&amp;ti=0"><input type="hidden" class="itemDisplayButtons" value="|Detail|ShelfList|Favorite|Review|Location|SaveMarc|TextMe|Rate"><input type="hidden" class="itemGridID" value="91848"><input type="hidden" class="itemBelongToLibrary" value="0001">
+         </div>
+         <div class="titleInfo flexlayout">
+            <div style="flex:0 0 20px;-webkit-flex:0 0 20px;"><input type="checkbox" name="chk_Item" id="chk_Item91848" value="91848" title="Select Frog And Friends : celebrate Thanksgiving, Christmas, and New Year's Eve" data-reservebooking="N">  </div>
+            <div style="font-weight:bold;"><label for="chk_Item91848">Frog And Friends : celebrate...</label></div>
+         </div>
+         <div class="normalText"><a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=%20Bunting%2C%20Eve%2C%201928-&amp;c=c"> Bunting, Eve, 1928-</a>&nbsp;&nbsp;<a href="DoSearch?action=simple&amp;l=0001&amp;t=Authors&amp;k=Masse%2C%20Josee&amp;c=c">Masse, Josee</a></div>
+         <div class="normalText">Sleeping Bear</div>
+         <div class="normalText">2015.</div>
+         <div class="normalText"></div>
+         <div class="normalText"></div>
+         <div class="blueFont normalText">Availability: 0&nbsp;of&nbsp;0</div>
+         <div class="flexlayout" style="margin-top:3px;display:none;">
+            <div class="callNoGrid">[E]</div>
+
+         </div>
+      </div>
+   </div>
+</div>
+

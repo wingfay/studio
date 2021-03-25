@@ -74,6 +74,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Learn", "Learn", "{5060E08C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpVersionNewFeature", "CSharpVersionNewFeature\CSharpVersionNewFeature.csproj", "{D0873805-CDF2-462F-93FD-50A9C791CF21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetVersion", "GetVersion\GetVersion.csproj", "{0A98481C-A397-489C-86C4-EC691743D31A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -176,6 +178,10 @@ Global
 		{D0873805-CDF2-462F-93FD-50A9C791CF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0873805-CDF2-462F-93FD-50A9C791CF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0873805-CDF2-462F-93FD-50A9C791CF21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A98481C-A397-489C-86C4-EC691743D31A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A98481C-A397-489C-86C4-EC691743D31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A98481C-A397-489C-86C4-EC691743D31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A98481C-A397-489C-86C4-EC691743D31A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

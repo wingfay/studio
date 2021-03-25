@@ -22,3 +22,76 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
+
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.read-ppt {
+    position: relative;
+    width: 85%;
+    margin: auto;
+    height: 0;
+    text-align: center;
+    border: 1px solid #d1d6da;
+    margin-bottom: 15px;
+}
+
+.loading {
+    position: absolute;
+    display: none;
+    left: 50%;
+    top: 50%;
+    margin-top: -25px;
+    margin-left: -25px;
+    width: 50px;
+    height: 50px;
+    background: url("../images/loading.gif") no-repeat;
+}
+
+.read-ppt span {
+    background: url("../images/video_slider_arrow.png") no-repeat;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: block;
+    margin: -40px 0 0 -50px;
+    width: 35px;
+    height: 50px;
+    text-indent: -9999px;
+    background-color: black;
+}
+
+    .read-ppt span:hover {
+        cursor: pointer;
+    }
+
+.read-ppt .next {
+    left: 100%;
+    margin-left: 15px;
+    background-position: -37px;
+}
+
+.ppt-pager {
+    display: none;
+    text-align: center;
+    margin-bottom: 35px;
+    font-family: "Malgun Gothic";
+    font-size: 20px;
+}
+
+    .ppt-pager .current-page {
+        font-size: 24px;
+        color: #0096d5;
+    }
+
+    .ppt-pager .total-page {
+        color: #555555;
+    }
+

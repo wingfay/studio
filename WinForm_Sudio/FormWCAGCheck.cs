@@ -16,11 +16,8 @@ namespace WinForm_Sudio
          txtFolder.Text = "D:\\Projects\\Webopac2015\\Webopac2015\\";
 
          dataGridView1.ReadOnly = false;
-         //不允许添加行
          dataGridView1.AllowUserToAddRows = false;
-         //只允许选中单行
          dataGridView1.MultiSelect = false;
-         //整行选中
          dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
 
@@ -43,11 +40,210 @@ namespace WinForm_Sudio
 
          var jsPath = txtFolder.Text + "Scripts\\opac";
 
-         var list = CheckStart(Viewpath,"*.cshtml");
+         var list = CheckStart(Viewpath, "*.cshtml");
 
          list = list.Union(CheckStart(jsPath, "*.js").ToList());
 
+         var csPath = txtFolder.Text + "App_Code";
+
+
+         list = list.Union(CheckStart(csPath, "*.cs").ToList());
+
+
+        // var testFile = "D:\\Projects\\Webopac2015\\Webopac2015\\App_Code\\Controllers\\ItemDetailController.cs";
+
+         //CheckSingleFile("D:\\Projects\\Webopac2015\\Webopac2015\\App_Code\\Controllers\\", testFile, "*.cs");
+
+
          this.dataGridView1.DataSource = list.OrderByDescending(file => file.CheckBoxCount + file.LabelCount + file.ACount+ file.IMGCount + file.DIVCount+file.ButtonCount).ToList();
+
+      }
+
+      private FileData CheckSingleFile(string strPath, string file,string filter)
+      {
+         bool existComment = false;
+
+         var filedata = new FileData { FileName = file, CheckBoxCount = 0 };
+
+         if (file.IndexOf("\\Manager\\") >= 0 || file.ToLower().IndexOf("manager") >= 0)
+         {
+            return null;
+         }
+
+         filedata.FileName = filedata.FileName.Replace(strPath, "");
+
+         filedata.CheckBoxLineDesc = string.Empty;
+
+         var lines = File.ReadAllLines(file);
+
+         if (lines.Count() <= 0)
+         {
+            return null;
+         }
+
+         string content = string.Empty;
+
+         int index = 0;
+
+         string tagHtml = string.Empty;
+         do
+         {
+
+
+
+            if (string.IsNullOrEmpty(content))
+            {
+               content = lines[index];
+            }
+
+            int line = index + 1;
+
+            if (string.IsNullOrEmpty(content))
+            {
+               index++;
+               continue;
+            }
+
+            #region  check comment
+
+
+            if ((filter.Equals("*.js") || filter.Equals("*.cs")))
+            {
+               if (content.Contains("//"))
+               {
+                  var indexComment = content.IndexOf("//");
+
+
+                  var sub = content.Substring(0, content.IndexOf("//"));
+
+                  if (isVaildComment(sub))
+                  {
+                     if (string.IsNullOrWhiteSpace(sub))
+                     {
+                        index++;
+                        content = string.Empty;
+                        continue;
+                     }
+                     else
+                     {
+                        content = sub;
+                     }
+                  }
+
+               }
+
+
+            }
+            else
+            {
+               if (content.Contains("@*") && content.Contains("*@"))
+               {
+                  index++;
+                  content = string.Empty;
+                  continue;
+               }
+               else if (content.Contains("@*"))
+               {
+                  existComment = true;
+                  index++;
+                  content = string.Empty;
+                  continue;
+               }
+            }
+
+            if (existComment)
+            {
+
+               if (content.Contains("*@"))
+               {
+                  existComment = false;
+
+
+               }
+               index++;
+               content = string.Empty;
+               continue;
+            }
+
+            #endregion
+
+            if (content.IndexOf("<") < 0)
+            {
+               index++;
+               content = string.Empty;
+               continue;
+            }
+
+            if (content.IndexOf(">") < 0)
+            {
+               tagHtml = content;
+
+               int j = index + 1;
+
+               for (; j < lines.Length; j++)
+               {
+                  if (lines[j].ToLower().IndexOf(">") >= 0)
+                  {
+                     break;
+                  }
+
+                  tagHtml += lines[j].Trim();
+
+
+               }
+
+               if (j < lines.Count())
+               {
+                  tagHtml += lines[j].Substring(0, lines[j].IndexOf(">")).Trim();
+                  content = lines[j].Substring(lines[j].IndexOf(">") + 1);
+               }
+
+               index = j;
+            }
+            else
+            {
+
+               if (content.IndexOf(">") < content.IndexOf("<"))
+               {
+                  content = string.Empty;
+                  ++index;
+                  continue;
+               }
+
+               tagHtml = content.Substring(content.IndexOf("<"), content.IndexOf(">") - content.IndexOf("<") + 1);
+
+               content = content.Substring(content.IndexOf(">") + 1);
+            }
+
+
+
+
+
+            bool jump = ParseHTML(tagHtml, lines, index + 1, ref index, content, filedata);
+
+
+            if (string.IsNullOrEmpty(content))
+            {
+               if (index + 1 < lines.Count())
+               {
+                  content = lines[++index];
+               }
+               else
+               {
+                  break;
+               }
+
+            }
+
+            if (index >= lines.Count())
+            {
+               break;
+            }
+
+         } while (lines.Count() > index);
+
+
+         return filedata;
 
       }
 
@@ -57,448 +253,302 @@ namespace WinForm_Sudio
 
          List<FileData> filelist = new List<FileData>();
 
-         bool existComment = false;
 
 
          foreach (var item in files)
          {
-            var filedata = new FileData { FileName = item, CheckBoxCount = 0 };
 
-            if (item.IndexOf("\\Manager\\") >= 0 || (filter.Contains("js") && item.ToLower().IndexOf("manager")>=0))
+            FileData fileData = CheckSingleFile(strPath, item, filter);
+
+
+            if(fileData !=null && (fileData.CheckBoxCount + fileData.LabelCount + fileData.ACount + fileData.IMGCount + fileData.DIVCount + fileData.ButtonCount) > 0)
             {
-               continue;
+               filelist.Add(fileData);
             }
 
-            filedata.FileName = filedata.FileName.Replace(strPath, "");
+         }
 
-            filedata.CheckBoxLineDesc = string.Empty;
+         return filelist;
+      }
 
-            var lines = File.ReadAllLines(item);
 
-          
+      private bool ParseHTML(string tagHTML,  string[] lines,int line,ref int index,string content,  FileData fileData)
+      {
+         bool jump = false;
 
-            for (int i = 0; i < lines.Count(); i++)
+         if (tagHTML.ToLower().IndexOf("<label ") >= 0)
+         {
+            if (tagHTML.ToLower().IndexOf("for=") < 0 && tagHTML.ToLower().IndexOf("for =") < 0)
             {
-               string content = lines[i];
+               fileData.LabelCount++;
 
-               int line = i + 1;
-
-
-               if (string.IsNullOrEmpty(content))
+               if (string.IsNullOrEmpty(fileData.LabelLineDesc) == false)
                {
-                  continue;
+                  fileData.LabelLineDesc += "  ";
                }
 
-               #region  check comment
-               
-               if ((content.Contains("@*") && content.Contains("*@")) || (filter.Contains("js") && content.Contains("//")))
+               fileData.LabelLineDesc += string.Format("{0}", line);
+            }
+
+
+         }
+         else if (tagHTML.ToLower().IndexOf("<a ") >= 0)
+         {
+            if ((tagHTML.ToLower().IndexOf("href=") < 0 && tagHTML.ToLower().IndexOf("href =") < 0
+               && tagHTML.ToLower().IndexOf("#=href#") <= 0 && tagHTML.ToLower().IndexOf("#= href#") <= 0)
+               || (tagHTML.ToLower().IndexOf("href='#'") > 0 || tagHTML.ToLower().IndexOf("href=\"#\"") > 0 
+               || tagHTML.ToLower().IndexOf("href =\"#\"") > 0 || tagHTML.ToLower().IndexOf("href='\\\\#'") > 0
+               || tagHTML.ToLower().IndexOf("href=\\\"#\\\"") > 0))
+            {
+               fileData.ACount++;
+
+               if (string.IsNullOrEmpty(fileData.ALineDesc) == false)
                {
-                  continue;
+                  fileData.ALineDesc += "  ";
                }
-               else if (content.Contains("@*"))
-               {
-                  existComment = true;
 
-                  continue;
+               fileData.ALineDesc += string.Format("{0}", line);
+            }
+
+            if ((tagHTML.ToLower().IndexOf("onmouseover") > 0 && tagHTML.ToLower().IndexOf("onfocus") < 0)
+                  || (tagHTML.ToLower().IndexOf("onmouseover") < 0 && tagHTML.ToLower().IndexOf("onfocus") > 0)
+                  || (tagHTML.ToLower().IndexOf("onmouseout") < 0 && tagHTML.ToLower().IndexOf("onblur") > 0)
+                  || (tagHTML.ToLower().IndexOf("onmouseout") > 0 && tagHTML.ToLower().IndexOf("onblur") < 0)
+                  )
+            {
+               fileData.ACount++;
+
+               if (string.IsNullOrEmpty(fileData.ALineDesc) == false)
+               {
+                  fileData.ALineDesc += "  ";
                }
 
-               if (existComment)
-               {
+               fileData.ALineDesc += string.Format("{0}", line);
+            }
 
-                  if (content.Contains("*@"))
+
+
+
+         }
+         else if (tagHTML.ToLower().IndexOf("<img ") >= 0)
+         {
+            if (tagHTML.ToLower().IndexOf("alt=") < 0)
+            {
+               fileData.IMGCount++;
+
+               if (string.IsNullOrEmpty(fileData.IMGLineDesc) == false)
+               {
+                  fileData.IMGLineDesc += "  ";
+               }
+
+               fileData.IMGLineDesc += string.Format("{0}", line);
+            }
+         }
+         else if (tagHTML.ToLower().IndexOf("<div ") >= 0)
+         {
+
+            if (tagHTML.ToLower().IndexOf("onclick") > 0 || tagHTML.ToLower().IndexOf("dblclick") > 0 || tagHTML.ToLower().IndexOf("mouseover") > 0)
+            {
+               fileData.DIVCount++;
+
+               if (string.IsNullOrEmpty(fileData.DIVLineDesc) == false)
+               {
+                  fileData.DIVLineDesc += "  ";
+               }
+
+               fileData.DIVLineDesc += string.Format("{0}", line);
+            }
+
+         }
+         else if (tagHTML.ToLower().IndexOf("<input ") >= 0)
+         {
+           
+
+            if ((tagHTML.ToLower().IndexOf(@"type=""checkbox""") >= 0 || tagHTML.ToLower().IndexOf("checkbox") >= 0)
+           && (tagHTML.ToLower().IndexOf(@"title=") <= 0 && tagHTML.ToLower().IndexOf(@"title =") <= 0))
+            {
+
+
+               fileData.CheckBoxCount++;
+
+               if (string.IsNullOrEmpty(fileData.CheckBoxLineDesc) == false)
+               {
+                  fileData.CheckBoxLineDesc += "  ";
+               }
+
+               fileData.CheckBoxLineDesc += string.Format("{0}", line);
+
+
+
+            }
+            else if (tagHTML.ToLower().IndexOf("button") > 0 && (tagHTML.ToLower().IndexOf("value=") < 0 && tagHTML.ToLower().IndexOf("value =") < 0))
+            {
+               if (tagHTML.ToLower().IndexOf("aria-label") < 0)
+               {
+                  fileData.ButtonCount++;
+
+                  if (string.IsNullOrEmpty(fileData.ButtonLineDesc) == false)
                   {
-                     existComment = false;
+                     fileData.ButtonLineDesc += "  ";
+                  }
+
+                  fileData.ButtonLineDesc += string.Format("{0}", line);
+               }
+            }
+
+         }
+         else if (tagHTML.ToLower().IndexOf("<button ") >= 0)
+         {
+            if (tagHTML.Contains("/>"))
+            {
+               if (tagHTML.ToLower().IndexOf("aria-label") < 0)
+               {
+                  fileData.ButtonCount++;
+
+                  if (string.IsNullOrEmpty(fileData.ButtonLineDesc) == false)
+                  {
+                     fileData.ButtonLineDesc += "  ";
+                  }
+
+                  fileData.ButtonLineDesc += string.Format("{0}", line);
+               }
+            }
+            else
+            {
+               var buttonInnerHTML = string.Empty;
+
+               if (content.ToLower().Contains("</button>"))
+               {
+                  buttonInnerHTML = content.Substring(0, content.ToLower().IndexOf("</button>")).Trim();
+
+                  content = content.Substring(content.ToLower().IndexOf("</button>")+9);
+               }
+               else
+               {
+                  int j = index + 1;
+
+
+
+                  for (; j < lines.Length; j++)
+                  {
+                     if (lines[j].ToLower().IndexOf("</button>") >= 0)
+                     {
+                        jump = true;
+                        break;
+                     }
+
+                     buttonInnerHTML += lines[j].Trim();
 
 
                   }
-                  continue;
+
+                  if (j < lines.Count())
+                  {
+                     buttonInnerHTML += lines[j].Substring(0, lines[j].ToLower().IndexOf("</button>")).Trim();
+
+                     content = lines[j].Substring(lines[j].ToLower().IndexOf("</button>") + 9);
+                  }
+
+ 
+                  index = j;
+
+                 
                }
 
-               #endregion
-
-
-
-
-               if (content.IndexOf("<") < 0)
+               if (buttonInnerHTML.Length < 0)
                {
-                  continue;
+                  fileData.ButtonCount++;
+
+                  if (string.IsNullOrEmpty(fileData.ButtonLineDesc) == false)
+                  {
+                     fileData.ButtonLineDesc += "  ";
+                  }
+
+                  fileData.ButtonLineDesc += string.Format("{0}", line);
                }
+               else
+               {
 
-               //var tagHtml = string.Empty;
-               //if (content.IndexOf(">") < 0)
-               //{
-               //   tagHtml = content;
+                  HtmlDocument doc = new HtmlDocument();
 
-               //   int j = i + 1;
+                  doc.LoadHtml(buttonInnerHTML);
 
-               //   for (; j < lines.Length; j++)
-               //   {
-               //      if (lines[j].ToLower().IndexOf(">") >= 0)
-               //      {
-               //         break;
-               //      }
+                  if (doc.DocumentNode.InnerText.Trim().Length <= 0)
+                  {
+                     if (buttonInnerHTML.IndexOf("<") > 0
+                    && (buttonInnerHTML.IndexOf("alt=") < 0 && buttonInnerHTML.IndexOf("alt =") < 0 && buttonInnerHTML.IndexOf("title=") < 0 && buttonInnerHTML.IndexOf("title =") < 0))
+                     {
+                        fileData.ButtonCount++;
 
-               //      tagHtml += lines[j].Trim();
+                        if (string.IsNullOrEmpty(fileData.ButtonLineDesc) == false)
+                        {
+                           fileData.ButtonLineDesc += "  ";
+                        }
 
-                    
-               //   }
-
-               //   tagHtml += lines[j].Substring(0, lines[j].ToLower().IndexOf(">")).Trim();
-               //}
-
-               
+                        fileData.ButtonLineDesc += string.Format("{0}", line);
+                     }
+                  }
+               }
 
               
 
-               if (content.ToLower().IndexOf("<label ") >= 0 && content.ToLower().IndexOf("@*") < 0)
-               {
-                  if (content.ToLower().IndexOf("for=") < 0 && content.ToLower().IndexOf("for =") < 0)
-                  {
-                     filedata.LabelCount++;
 
-                     if (string.IsNullOrEmpty(filedata.LabelLineDesc) == false)
-                     {
-                        filedata.LabelLineDesc += "  ";
-                     }
-
-                     filedata.LabelLineDesc += string.Format("{0}", line);
-                  }
-
-
-               }
-
-
-               if (content.ToLower().IndexOf("<a ") >= 0)
-               {
-                  if ((content.ToLower().IndexOf("href=") < 0 && content.ToLower().IndexOf("href =") < 0
-                     && content.ToLower().IndexOf("#=href#") <= 0 && content.ToLower().IndexOf("#= href#") <= 0)
-                     || (content.ToLower().IndexOf("href='#'") > 0 || content.ToLower().IndexOf("href=\"#\"") > 0 || content.ToLower().IndexOf("href =\"#\"") > 0 || content.ToLower().IndexOf("href='\\\\#'") > 0))
-                  {
-                     filedata.ACount++;
-
-                     if (string.IsNullOrEmpty(filedata.ALineDesc) == false)
-                     {
-                        filedata.ALineDesc += "  ";
-                     }
-
-                     filedata.ALineDesc += string.Format("{0}", line);
-                  }
-
-                  if ((content.ToLower().IndexOf("onmouseover") > 0 && content.ToLower().IndexOf("onfocus") < 0)
-                        || (content.ToLower().IndexOf("onmouseover") < 0 && content.ToLower().IndexOf("onfocus") > 0)
-                        || (content.ToLower().IndexOf("onmouseout") < 0 && content.ToLower().IndexOf("onblur") > 0)
-                        || (content.ToLower().IndexOf("onmouseout") > 0 && content.ToLower().IndexOf("onblur") < 0)
-                        )
-                  {
-                     filedata.ACount++;
-
-                     if (string.IsNullOrEmpty(filedata.ALineDesc) == false)
-                     {
-                        filedata.ALineDesc += "  ";
-                     }
-
-                     filedata.ALineDesc += string.Format("{0}", line);
-                  }
-
-
-
-
-               }
-
-               if (content.ToLower().IndexOf("<img ") >= 0)
-               {
-                  if (content.ToLower().IndexOf("alt=") < 0)
-                  {
-                     filedata.IMGCount++;
-
-                     if (string.IsNullOrEmpty(filedata.IMGLineDesc) == false)
-                     {
-                        filedata.IMGLineDesc += "  ";
-                     }
-
-                     filedata.IMGLineDesc += string.Format("{0}", line);
-                  }
-               }
-
-
-               if (content.ToLower().IndexOf("<div ") >= 0)
-               {
-                  int index = content.ToLower().IndexOf("<div ");
-                  var substr = content.Substring(index);
-
-                  bool jump = false;
-                  if (substr.IndexOf(">") > 0)
-                  {
-                     substr = substr.Substring(0, substr.IndexOf(">"));
-                  }
-                  else
-                  {
-                     int j = i + 1;
-
-
-                     for (; j < lines.Length; j++)
-                     {
-                        if (lines[j].ToLower().IndexOf(">") >= 0)
-                        {
-                           jump = true;
-                           break;
-                        }
-
-                        substr += lines[j].Trim();
-
-
-                     }
-
-                     substr += lines[j].Substring(0, lines[j].ToLower().IndexOf(">")).Trim();
-
-                  }
-
-                  if (substr.ToLower().IndexOf("onclick") > 0 || substr.ToLower().IndexOf("dblclick") > 0 || substr.ToLower().IndexOf("mouseover") > 0)
-                  {
-                     filedata.DIVCount++;
-
-                     if (string.IsNullOrEmpty(filedata.DIVLineDesc) == false)
-                     {
-                        filedata.DIVLineDesc += "  ";
-                     }
-
-                     filedata.DIVLineDesc += string.Format("{0}", line);
-                  }
-
-                  if (jump)
-                  {
-                     continue;
-                  }
-               }
-
-
-               if (content.ToLower().IndexOf("<input ") >= 0)
-               {
-                  int index = content.ToLower().IndexOf("<input ");
-                  var substr = content.Substring(index);
-
-                  bool jump = false;
-                  if (substr.IndexOf(">") > 0)
-                  {
-                     substr = substr.Substring(0, substr.IndexOf(">"));
-                  }
-                  else
-                  {
-                     int j = i + 1;
-
-
-                     for (; j < lines.Length; j++)
-                     {
-                        if (lines[j].ToLower().IndexOf("</input>") >= 0 || lines[j].ToLower().IndexOf("/>") >= 0 || lines[j].ToLower().IndexOf(">") >= 0)
-                        {
-                           jump = true;
-                           break;
-                        }
-
-                        substr += lines[j].Trim();
-
-
-                     }
-
-                     if(lines[j].ToLower().IndexOf("</input>") >= 0)
-                     {
-                        substr += lines[j].Substring(0, lines[j].ToLower().IndexOf("</input>")).Trim();
-                     }
-                     else if(lines[j].ToLower().IndexOf("/>") >= 0)
-                     {
-                        substr += lines[j].Substring(0, lines[j].ToLower().IndexOf("/>")).Trim();
-                     }
-                     else
-                     {
-                        substr += lines[j].Substring(0, lines[j].ToLower().IndexOf(">")).Trim();
-                     }
-                    
-
-                     i = j;
-                  }
-
-                  if ((substr.ToLower().IndexOf(@"type=""checkbox""") >= 0 || substr.ToLower().IndexOf("checkbox") >= 0)
-                 && (substr.ToLower().IndexOf(@"title=") <= 0 && substr.ToLower().IndexOf(@"title =") <= 0))
-                  {
-
-
-                     filedata.CheckBoxCount++;
-
-                     if (string.IsNullOrEmpty(filedata.CheckBoxLineDesc) == false)
-                     {
-                        filedata.CheckBoxLineDesc += "  ";
-                     }
-
-                     filedata.CheckBoxLineDesc += string.Format("{0}", line);
-
-
-
-                  }
-                  else if (substr.ToLower().IndexOf("button") > 0  && (substr.ToLower().IndexOf("value=")<0 && substr.ToLower().IndexOf("value =") < 0))
-                  {
-                     if (substr.ToLower().IndexOf("aria-label") < 0)
-                     {
-                        filedata.ButtonCount++;
-
-                        if (string.IsNullOrEmpty(filedata.ButtonLineDesc) == false)
-                        {
-                           filedata.ButtonLineDesc += "  ";
-                        }
-
-                        filedata.ButtonLineDesc += string.Format("{0}", line);
-                     }
-                  }
-
-                  if (jump)
-                  {
-                     continue;
-                  }
-               }
-
-
-
-               if (content.ToLower().IndexOf("<button ") >= 0)
-               {
-                  int index = content.ToLower().IndexOf("<button ");
-                  var substr = content.Substring(index);
-
-
-                  if (content.IndexOf(">") > 0)
-                  {
-                     substr = substr.Substring(0, substr.IndexOf(">")+1);
-
-                     if (substr.Contains("/>"))
-                     {
-                        if (substr.ToLower().IndexOf("aria-label") < 0)
-                        {
-                           filedata.ButtonCount++;
-
-                           if (string.IsNullOrEmpty(filedata.ButtonLineDesc) == false)
-                           {
-                              filedata.ButtonLineDesc += "  ";
-                           }
-
-                           filedata.ButtonLineDesc += string.Format("{0}", line);
-                        }
-                     }
-                     else
-                     {
-                        bool jump = false;
-                        var buttonInnerHTML = string.Empty;
-
-                        if (content.ToLower().Contains("</button>"))
-                        {
-                           buttonInnerHTML = content.Substring(content.IndexOf(">")+1, content.ToLower().IndexOf("</button>") - content.IndexOf(">") - 1).Trim();
-                        }
-                        else
-                        {
-                           int j = i + 1;
-
-                           
-
-                           for (; j < lines.Length; j++)
-                           {
-                              if (lines[j].ToLower().IndexOf("</button>") >= 0)
-                              {
-                                 jump = true;
-                                 break;
-                              }
-
-                              buttonInnerHTML += lines[j].Trim();
-
-
-                           }
-
-                           buttonInnerHTML += lines[j].Substring(0, lines[j].ToLower().IndexOf("</button>")).Trim();
-
-                           i = j;
-                        }
-
-                        if (buttonInnerHTML.Length < 0)
-                        {
-                           filedata.ButtonCount++;
-
-                           if (string.IsNullOrEmpty(filedata.ButtonLineDesc) == false)
-                           {
-                              filedata.ButtonLineDesc += "  ";
-                           }
-
-                           filedata.ButtonLineDesc += string.Format("{0}", line);
-                        }
-                        else
-                        {
-
-                           HtmlDocument doc = new HtmlDocument();
-
-                           doc.LoadHtml(buttonInnerHTML);
-
-                           if (doc.DocumentNode.InnerText.Trim().Length <= 0)
-                           {
-                              if (buttonInnerHTML.IndexOf("<") > 0
-                             && (buttonInnerHTML.IndexOf("alt=") < 0 && buttonInnerHTML.IndexOf("alt =") < 0 && buttonInnerHTML.IndexOf("title=") < 0 && buttonInnerHTML.IndexOf("title =") < 0))
-                              {
-                                 filedata.ButtonCount++;
-
-                                 if (string.IsNullOrEmpty(filedata.ButtonLineDesc) == false)
-                                 {
-                                    filedata.ButtonLineDesc += "  ";
-                                 }
-
-                                 filedata.ButtonLineDesc += string.Format("{0}", line);
-                              }
-                           }
-                        }
-
-                        if (jump)
-                        {
-                           continue;
-                        }
-                           
-
-                          
-
-
-                     }
-                    
-                   
-                  }
-
-
-               }
 
 
             }
 
-
-
-      
-
-
-            filelist.Add(filedata);
+            
 
 
          }
 
 
-         return filelist;
 
-
-
-         
-
-
-
+         return jump;
       }
 
 
 
-
-      private void CheckLable()
+      private bool isVaildComment(string str)
       {
+         if(str.Contains("\"") ==false && str.Contains("'")== false)
+         {
+            return true;
+         }
 
+         char doubleMarks = '"';
+
+         char singleMarks = '\'';
+
+         int countDoubleMarks = 0;
+
+         int countSingleMarks = 0;
+
+         foreach (char item in str)
+         {
+            if (item == doubleMarks)
+            {
+               ++countDoubleMarks;
+            }
+
+            if (item == singleMarks)
+            {
+               ++countSingleMarks;
+            }
+         }
+         if(countDoubleMarks>0 && countDoubleMarks % 2 > 0)
+         {
+            return false;
+         }
+
+         if (countSingleMarks > 0 && countSingleMarks % 2 > 0)
+         {
+            return false;
+         }
+
+
+         return true;
       }
-
-
       
 
    }

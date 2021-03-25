@@ -1,0 +1,30 @@
+﻿@{
+   ViewBag.Title = "Local";
+}
+
+
+<div class="container">
+   <div class="read-ppt">
+      <div class="ppt-view">
+         <canvas id="canvas"></canvas>
+         <div class="loading"></div>
+      </div>
+      <span class="next"></span>
+      <span class="prev"></span>
+   </div>
+   <div class="ppt-pager" style="display: block;">
+      <span class="current-page">0</span>
+      <span>/</span>
+      <span class="total-page">0</span>
+   </div>
+</div>
+
+
+
+
+@section Scripts{
+   <script src="/Scripts/pdf/pdf.js"></script>
+   <script src="/Scripts/pdf/pdf.worker.js"></script>
+   <script src="/Scripts/pdf/readPPT.js"></script>
+}
+

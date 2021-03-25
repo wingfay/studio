@@ -167,22 +167,60 @@ namespace ConsoleApp
          //   System.Console.WriteLine(item);
          //}
 
+         string[] allowTypes = new string[] { "Shell", "agg", "histShell", "histNewsAgg", "apps", "Historic", "category", "obits" };
 
-         double x1 = 5.124567;
-         double x2 = 5.125111;
-         double x3 = 5.126111;
 
-         Console.WriteLine($"{x1}:{(x1 * 100)} {Convert.ToInt32(x1 * 100)} {(Convert.ToInt32((x1*100))/100f).ToString("0:F")}");
-         Console.WriteLine($"{x2}: {(x2 * 100).ToString()} {(Convert.ToInt32((x2 * 100)) / 100f).ToString("0:F")}");
-         Console.WriteLine($"{x2}:  {string.Format("{0:0.00}", Math.Floor(x2 * 100) / 100)}");
-         Console.WriteLine($"{x3}: {(Convert.ToInt32((x3 * 100)) / 100f).ToString("0:F")}");
+         System.Console.WriteLine(allowTypes.Any(a=>a.ToLower()=="Hello".ToLower()));
 
+         System.Console.WriteLine(allowTypes.Any(a => a.ToLower() == "histShell".ToLower()));
+         // ParseHtml();
 
 
          Console.ReadKey();
       }
 
-      private static XmlDocument LoadXMLFromFile(string strFileNamePath)
+      /// <summary>
+      /// 计算小数取整问题
+      /// </summary>
+      private void ComputeFloor()
+      {
+         double x1 = 5.124567;
+         double x2 = 5.125111;
+         double x3 = 5.126111;
+
+         Console.WriteLine($"{x1}:{(x1 * 100)} {Convert.ToInt32(x1 * 100)} {(Convert.ToInt32((x1 * 100)) / 100f).ToString("0:F")}");
+         Console.WriteLine($"{x2}: {(x2 * 100).ToString()} {(Convert.ToInt32((x2 * 100)) / 100f).ToString("0:F")}");
+         Console.WriteLine($"{x2}:  {string.Format("{0:0.00}", Math.Floor(x2 * 100) / 100)}");
+         Console.WriteLine($"{x3}: {(Convert.ToInt32((x3 * 100)) / 100f).ToString("0:F")}");
+      }
+
+      private static void ParseHtml()
+      {
+         string strHtml = "<input class=\"k-checkbox\" id=\"chkName + index + \" name=\"encodeURIComponent(value)\" type=\"checkbox\" value=\"true\" checked>";
+
+         string Name = string.Empty;
+
+         string ID = string.Empty;
+
+         foreach (var item in strHtml.Split(' '))
+         {
+            if (item.ToLower().Contains("name=") || item.ToLower().Contains("name ="))
+            {
+               Name = item.Substring(item.IndexOf("=") + 1);
+            }
+
+            if (item.ToLower().Contains("id=") && item.ToLower().Contains("id ="))
+            {
+               ID = item.Substring(item.IndexOf("=") + 1);
+            }
+         }
+
+         Console.WriteLine($"name:{Name}");
+         Console.WriteLine($"{nameof(ID)}:{ID}");
+      }
+   
+
+   private static XmlDocument LoadXMLFromFile(string strFileNamePath)
       {
          if (System.IO.File.Exists(strFileNamePath))
          {

@@ -266,12 +266,7 @@ namespace TestWeb.Controllers
          return View();
       }
 
-      public ActionResult Contact()
-      {
-         ViewBag.Message = "Your contact page.";
 
-         return View();
-      }
 
       public JsonResult GetBase64(int id)
       {
@@ -297,7 +292,13 @@ namespace TestWeb.Controllers
          Session["Decrypt"] = AESHelper.DecryptByAES(DecryptData, Session["Key"].ToString());
          return Redirect("index");
       }
+
+      public ActionResult Demo()
+      {
+         return View();
+      }
    }
+
 
 
 
