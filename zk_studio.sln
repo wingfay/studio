@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZK.NetCore.Util", "ZK.NetCore.Util\ZK.NetCore.Util.csproj", "{0B3801A3-DEFD-439F-BA6E-5BFE333DAE46}"
 EndProject
@@ -73,8 +73,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Learn", "Learn", "{5060E08C-4BCC-4198-843A-B1F10FA0AD22}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpVersionNewFeature", "CSharpVersionNewFeature\CSharpVersionNewFeature.csproj", "{D0873805-CDF2-462F-93FD-50A9C791CF21}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetVersion", "GetVersion\GetVersion.csproj", "{0A98481C-A397-489C-86C4-EC691743D31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -178,10 +176,6 @@ Global
 		{D0873805-CDF2-462F-93FD-50A9C791CF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0873805-CDF2-462F-93FD-50A9C791CF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0873805-CDF2-462F-93FD-50A9C791CF21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A98481C-A397-489C-86C4-EC691743D31A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A98481C-A397-489C-86C4-EC691743D31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A98481C-A397-489C-86C4-EC691743D31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A98481C-A397-489C-86C4-EC691743D31A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

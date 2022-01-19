@@ -16,6 +16,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.VisualBasic;
 using System.Net;
 using RestSharp;
+using System.Collections.Specialized;
 
 namespace ConsoleApp
 {
@@ -167,18 +168,154 @@ namespace ConsoleApp
          //   System.Console.WriteLine(item);
          //}
 
-         string[] allowTypes = new string[] { "Shell", "agg", "histShell", "histNewsAgg", "apps", "Historic", "category", "obits" };
+         //string[] allowTypes = new string[] { "Shell", "agg", "histShell", "histNewsAgg", "apps", "Historic", "category", "obits" };
 
 
-         System.Console.WriteLine(allowTypes.Any(a=>a.ToLower()=="Hello".ToLower()));
+         //System.Console.WriteLine(allowTypes.Any(a=>a.ToLower()=="Hello".ToLower()));
 
-         System.Console.WriteLine(allowTypes.Any(a => a.ToLower() == "histShell".ToLower()));
+         //System.Console.WriteLine(allowTypes.Any(a => a.ToLower() == "histShell".ToLower()));
          // ParseHtml();
 
+         //string strURL = "https://1.eduvision.tv";
+
+         //Uri uri = new Uri(strURL);
+
+         //System.Console.WriteLine((new Uri("https://1.eduvision.tv")).Host);
+         //System.Console.WriteLine((new Uri("https://eduvision.tv")).Host);
+         //System.Console.WriteLine((new Uri("https://www.eduvision.tv")).Host);
+
+         //System.Console.WriteLine((new Uri("https://org.eduvision.tv")).Host);
+
+         //    (https ?| ftp | file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]
+
+         //System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex("https?://[a-zA-Z.]*eduvision.tv");
+
+
+
+         //System.Console.WriteLine("https://org.eduvision.tv {0}",reg.IsMatch("https://org.eduvision.tv"));
+         //System.Console.WriteLine("https://eduvision.tv {0}", reg.IsMatch("https://eduvision.tv"));
+
+         //System.Console.WriteLine("http://eduvision.tv {0}", reg.IsMatch("http://eduvision.tv"));
+
+         //System.Console.WriteLine("https://123123on.tv {0}", reg.IsMatch("https://123123on.tv"));
+
+         //try
+         //{
+
+         //         var dirs = System.IO.Directory.EnumerateDirectories(@"D:\doc\Research\EDI");
+
+         //	foreach (var item in dirs)
+         //	{
+         //            System.Console.WriteLine(item);
+
+         //		if (item.Contains("Brodart"))
+         //		{
+         //               System.IO.Directory.Delete(item, true);
+         //            }
+         //         }
+
+         //         //System.IO.Directory.Delete(@"D:\doc\Research\EDI\Fw_ More Brodart EDI fyi  ", true);
+         //      }
+         //catch (Exception ex)
+         //{
+
+         //         System.Console.WriteLine(ex.Message);
+         //      }
+
+
+
+
+         //      TestEduvision();
+
+         Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
+
+         System.Console.WriteLine(keyValuePairs.Count);
+
+         //System.Console.WriteLine(keyValuePairs.ElementAt(0).Key);
+
+
+         keyValuePairs["a"] = 1;
+
+         System.Console.WriteLine(keyValuePairs.Count);
+
+         System.Console.WriteLine(keyValuePairs.ElementAt(0).Key);
+
+         keyValuePairs["b"] = 1;
+
+         System.Console.WriteLine(keyValuePairs.Count);
+
+         System.Console.WriteLine(keyValuePairs.ElementAt(0).Key);
 
          Console.ReadKey();
       }
 
+
+      private void learn360Test()
+		{
+         string eBookLink = "https://learn360.infobase.com/PortalPlaylists.aspx?wID=266625&xtid=96801";
+
+         string downloadAddress = string.Empty;
+
+         string baseNewLearn360Link = NewLearn360Link(eBookLink);
+         if (!string.IsNullOrEmpty(baseNewLearn360Link) && eBookLink.Contains("xtid="))
+         {
+            string videoID = eBookLink.Substring(eBookLink.IndexOf("xtid=") + "xtid=".Length);
+            if (videoID.IndexOf("&") == 0)
+            {
+               videoID = null;
+            }
+            else if (videoID.IndexOf("&") > 0)
+            {
+               videoID = videoID.Substring(0, videoID.IndexOf("&"));
+            }
+            if (!string.IsNullOrWhiteSpace(videoID))
+            {
+               downloadAddress = baseNewLearn360Link.ToLower();
+               if (downloadAddress.Contains("portalplaylists.aspx?"))
+               {
+                  downloadAddress = baseNewLearn360Link.Replace(baseNewLearn360Link.Substring(downloadAddress.IndexOf("portalplaylists.aspx?")), "");
+               }
+               else
+               {
+                  downloadAddress = baseNewLearn360Link;
+               }
+               downloadAddress += "image/" + videoID;
+            }
+         }
+
+
+         if (!string.IsNullOrWhiteSpace(downloadAddress))
+         {
+            //string filePath = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "~imageCT" + itemID + ".JPG";
+            //alivya add contentType check logic at 2017-07-28, ver 8.1.4.
+            bool isImageContent = false;
+            System.Net.HttpWebRequest httpWebRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(downloadAddress);
+            System.Net.WebResponse webResponse = httpWebRequest.GetResponse();
+            if (webResponse.ContentType.ToLower().StartsWith("image"))
+               isImageContent = true;
+            httpWebRequest.Abort();
+            webResponse.Close();
+            string fileName = "~imageCT2269399.JPG";
+            if (isImageContent)
+            {
+               System.Net.WebClient webClient = new System.Net.WebClient();
+               webClient.DownloadFile(downloadAddress, fileName);
+               FileInfo info = new FileInfo(fileName);
+               if (info.Exists)
+               {
+                  if (info.Length > 1000)
+                  {
+                     FileStream stream = new FileStream(fileName, FileMode.Open);
+                     int length = (int)stream.Length;
+                     byte[] buffer = new byte[length];
+                     stream.Read(buffer, 0, buffer.Length);
+                     stream.Close();
+
+                  }
+               }
+            }
+         }
+      }
       /// <summary>
       /// 计算小数取整问题
       /// </summary>
@@ -193,6 +330,31 @@ namespace ConsoleApp
          Console.WriteLine($"{x2}:  {string.Format("{0:0.00}", Math.Floor(x2 * 100) / 100)}");
          Console.WriteLine($"{x3}: {(Convert.ToInt32((x3 * 100)) / 100f).ToString("0:F")}");
       }
+
+      static string NewLearn360URL = "https://learn360.infobase.com|https://fod.infobase.com|https://avod.infobase.com|https://cvod.infobase.com|http://learn360.infobase.com|http://fod.infobase.com|http://avod.infobase.com|http://cvod.infobase.com";
+      private static string NewLearn360Link(string strLink)
+      {
+         string newLearn360 = string.Empty;
+         if (!string.IsNullOrEmpty(NewLearn360URL))
+         {
+            var separator = new char[1];
+            separator[0] = '|';
+            var baseURLs = NewLearn360URL.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            if (baseURLs.Length > 0)
+            {
+               foreach (string baseURL in baseURLs)
+               {
+                  if (strLink.ToLower().IndexOf(baseURL.ToLower()) == 0)
+                  {
+                     newLearn360 = baseURL + "/PortalPlaylists.aspx?";
+                     break;
+                  }
+               }
+            }
+         }
+         return newLearn360;
+      }
+
 
       private static void ParseHtml()
       {
@@ -853,6 +1015,47 @@ namespace ConsoleApp
 
             throw;
          }
+      }
+
+
+      public static void TestEduvision()
+		{
+         string url = "https://api12.eduvision.tv/restapi.ashx/v11/user/authenticate";
+
+         var body = @"<Request>" + "\n" +
+                        @"<User>" + "\n" +
+                        @"<UserName>oneplaceTest</UserName>" + "\n" +
+                        @"<FirstName>Girijaa</FirstName>" + "\n" +
+                        @"<LastName>Doraiswamy</LastName>" + "\n" +
+                        @"<Code>0149</Code>" + "\n" +
+                        @"<Email>girijaad@jdlhorizons.com</Email>" + "\n" +
+                        @"</User>" + "\n" +
+                        @"</Request>";
+
+
+         NameValueCollection headers = new NameValueCollection();
+
+
+         headers["REST-APIUser--Token"] = "Z2lyaWphYWFwaWtleTpnaXJpamFh";
+         headers["APP-User-ID"] = "MQ==";
+
+
+         IHttpRequest httpRequest = new HttpRequest();
+
+         IResopnse resopnse = httpRequest.PostXML(url, string.Empty, headers, body);
+
+         XmlDocument xmlDocument = new XmlDocument();
+     
+         xmlDocument.LoadXml(resopnse.Result);
+
+         var userNode = xmlDocument.SelectSingleNode("Response/User");
+
+
+         var findNode = userNode.SelectSingleNode("AuthenticationStatus");
+
+         System.Console.WriteLine(findNode.InnerText);
+
+
       }
 
 

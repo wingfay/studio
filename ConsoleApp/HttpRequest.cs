@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace ConsoleApp
 {
@@ -15,7 +17,12 @@ namespace ConsoleApp
 
       IResopnse PostJSON(string URL, string Authorization, string JSON);
 
+      IResopnse PostXML(string URL, string Authorization, NameValueCollection Headers, string Body);
+
+
    }
+
+
 
    /// <summary>
    /// Request Web Api 
@@ -296,6 +303,130 @@ namespace ConsoleApp
             throw notsupportedexception;
          }
 
+      }
+
+
+      public IResopnse PostXML(string URL, string Authorization, NameValueCollection Headers, string Body)
+		{
+         try
+         {
+            Uri = new Uri(URL);
+         }
+         catch (Exception ex)
+         {
+
+            throw ex;
+         }
+
+
+         if (string.IsNullOrEmpty(Body))
+         {
+            throw new ArgumentException("Param Body Is Empty or Null!");
+         }
+
+         if (Uri.Scheme == "https")
+         {
+            ServicePointManager.ServerCertificateValidationCallback = (a, b, c, d) => true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+         }
+
+         try
+         {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+            if (!string.IsNullOrEmpty(Authorization))
+            {
+               request.Headers.Add("Authorization", Authorization);
+            }
+
+				if (Headers != null)
+				{
+					foreach (var item in Headers.AllKeys)
+					{
+                  request.Headers.Add(item, Headers[item]);
+					}
+				}
+
+            request.Headers.Add("cache-control", "no-cache");
+            request.ContentType = "application/xml";
+            request.Method = "POST";
+
+            // handler XML
+            byte[] payload;
+            payload = Encoding.UTF8.GetBytes(Body);
+            request.ContentLength = payload.Length;
+            Stream writer = request.GetRequestStream();
+            writer.Write(payload, 0, payload.Length);
+            writer.Close();
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+               if (response.StatusCode == HttpStatusCode.OK
+                  || response.StatusCode == HttpStatusCode.Created
+                  || response.StatusCode == HttpStatusCode.Accepted)
+               {
+                  using (var stream = response.GetResponseStream())
+                  {
+                     string strResult = string.Empty;
+                     using (var reader = new StreamReader(stream, Encoding))
+                     {
+                        strResult = reader.ReadToEnd();
+                     }
+
+                     return new Resopnse()
+                     {
+                        StatusCode = response.StatusCode,
+                        Result = strResult,
+
+                     };
+                  }
+               }
+               else
+               {
+                  return new Resopnse
+                  {
+                     StatusCode = response.StatusCode,
+                     Result = null,
+                  };
+               }
+
+
+            }
+         }
+         catch (WebException ex)
+         {
+            if (ex.Response != null)
+            {
+               HttpWebResponse response = (HttpWebResponse)ex.Response;
+               if (response != null)
+               {
+                  using (var stream = response.GetResponseStream())
+                  {
+                     using (var streamReader = new StreamReader(stream, Encoding))
+                     {
+                        return new Resopnse()
+                        {
+                           StatusCode = response.StatusCode,
+                           Result = streamReader.ReadToEnd(),
+
+                        };
+                     }
+                  }
+               }
+            }
+            throw ex;
+         }
+         catch (ProtocolViolationException protocolviolationexception)
+         {
+            throw protocolviolationexception;
+         }
+         catch (InvalidOperationException invalidoperationexception)
+         {
+            throw invalidoperationexception;
+         }
+         catch (NotSupportedException notsupportedexception)
+         {
+            throw notsupportedexception;
+         }
       }
 
 
