@@ -17,6 +17,11 @@ using Microsoft.VisualBasic;
 using System.Net;
 using RestSharp;
 using System.Collections.Specialized;
+using System.Threading;
+using WinEventHook;
+using System.Net.Security;
+using ComponentSpace.SAML2.Assertions;
+using System.Web;
 
 namespace ConsoleApp
 {
@@ -49,6 +54,7 @@ namespace ConsoleApp
       static void Main(string[] args)
         {
 
+         #region old 
 
          //TestLibrarySetup("0001|IPAW,22N2,AAAL,AAL4-EEDT||0002|IPAW,22N2,AAAL");
 
@@ -161,6 +167,9 @@ namespace ConsoleApp
          //         }
 
 
+         #endregion
+
+         #region Regex
          //string str1 = " Felidae--Juvenile literature.--Juvenile literature.; Cats. ";
 
          //foreach (char item in str1.ToCharArray())
@@ -227,27 +236,145 @@ namespace ConsoleApp
 
          //      TestEduvision();
 
-         Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
+         #endregion
 
-         System.Console.WriteLine(keyValuePairs.Count);
+         #region Network
 
-         //System.Console.WriteLine(keyValuePairs.ElementAt(0).Key);
+         //NetworkAdapters.GetLocalIPAddress();
+
+         #endregion
+
+         #region Print 
+
+         //PrintTest.FindSharePrinter("192.168.21.179", "Brother DCP-L2535DW series Printer");
+
+         //      PrintTest.FindSharePrinter("192.168.21.95", "Brother DCP-L2535DW series Printer195");
+         //      PrintTest.Load();
+
+         //      System.Console.WriteLine("---------------------------");
 
 
-         keyValuePairs["a"] = 1;
 
-         System.Console.WriteLine(keyValuePairs.Count);
+         //      PrintTest.WMILoad();
 
-         System.Console.WriteLine(keyValuePairs.ElementAt(0).Key);
+         #endregion
 
-         keyValuePairs["b"] = 1;
 
-         System.Console.WriteLine(keyValuePairs.Count);
+         //Win32Test.GetWindow();
 
-         System.Console.WriteLine(keyValuePairs.ElementAt(0).Key);
+         //var hook = new WindowEventHook();
+         //hook.EventReceived += (s, e) =>
+         //    Console.WriteLine(Enum.GetName(typeof(WindowEvent), e.EventType));
+         //hook.HookGlobal();
+         //Console.Read();
 
-         Console.ReadKey();
+         #region findWindow
+
+
+
+         // Win32Test.MatchWord2013PrintPage();
+
+
+         //System.Threading.Timer _timer = new System.Threading.Timer((_)=> { Win32Test.MatchWord2013PrintPage(); }, null, 500, 500);
+
+
+         #endregion
+
+
+         //string clientID = "de29abdf-a2fa-4e79-92f8-5bf942f877a9";
+         //string clientSecret = "67f49c94-9291-4ce1-b55b-125d1ea6c307";
+
+
+         //Console.WriteLine($"Base64Encode:{Base64Encode(clientID+":"+ clientSecret)}");
+
+         //Console.WriteLine($"token:{GetToken()}");
+
+
+         //         string xml = @"<?xml version=""1.0"" encoding=""UTF-8""?>
+         //<Assertion ID=""_dc5d2294-4441-406a-ad1a-5cb486310100"" IssueInstant=""2022-06-09T21:57:10.781Z"" Version=""2.0"" xmlns=""urn:oasis:names:tc:SAML:2.0:assertion"" xmlns:samlp=""urn:oasis:names:tc:SAML:2.0:protocol"">
+         //<Issuer>https://sts.windows.net/781241c9-17cf-4620-84af-3520024063a8/</Issuer>
+         //<Signature xmlns=""http://www.w3.org/2000/09/xmldsig#""><SignedInfo>
+         //<CanonicalizationMethod Algorithm=""http://www.w3.org/2001/10/xml-exc-c14n#"" /><SignatureMethod Algorithm=""http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"" />
+         //<Reference URI=""#_dc5d2294-4441-406a-ad1a-5cb486310100""><Transforms><Transform Algorithm=""http://www.w3.org/2000/09/xmldsig#enveloped-signature"" />
+         //<Transform Algorithm=""http://www.w3.org/2001/10/xml-exc-c14n#"" /></Transforms><DigestMethod Algorithm=""http://www.w3.org/2001/04/xmlenc#sha256"" />
+         //<DigestValue>YKDhr03PRsrh5rp8EW9aA/S2p1jp8iw/pv0JBSnKjSw=</DigestValue></Reference></SignedInfo>
+         //<SignatureValue>ZnrTyVl4eIpVoOSqT5WLPHbgjKBmzcf8TrYryNUeLL6m6oOYYtGBDz/qeW5/qZVF+mlCS6Vp9iL0vOJrHBL+/j6mpvsiFzyRJYp0mTHiXs9R1Z6doeBesH0zx266n+ZbAEaX3LJjM/q5YNM1A652mTilb3RaqnGt/5KYMGjYWZ5RdoK1aUhXTTzMEZhne0/gbmdhXJXQHSljZHTm0hpOok6oS3Q5A75AaHOrxp39+C+WqvNlBN1wOd9iiiFpMCasj+w0w0YN0JQfTAWU1rhw11TEkE4POJWofOeBhamXxS33Lzf8thr0mHh2dSk6S6o3yTLHhim2Vv4iJhtL16uRSA==</SignatureValue><KeyInfo><X509Data><X509Certificate>MIIC8DCCAdigAwIBAgIQVacbcg0fIY1HOpTPngLhjTANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQDEylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0yMjA2MDcxNDM2NDFaFw0yNTA2MDcxNDM2NDFaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQgU1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxh9CTpspjJ9oAVayT+4O71eBh7cA2pUWTo9TreIGaUAURPQwaxWPeov5diZNqnv/m5OFUKZmanje68hwRIefr8iPUqo1nAz7hdM8vDhevs9YJtVZ7oMzOv0XJDaXCmCHpmk94rxDmSzxRyNn/q5gG/rN4IGYTtQZUKGrK3J+NFMC8+6g3m7Kp3+glDOuFFKxroUwMCf76vyuo7hHF3a3t5MqnyMmO+bhQxgx1mbSY0BVuj9PcmcnW66uUZF9/Mao6F8JxT+4QHUAekrfEFfppFWvWhPDTfZyqunBKJgUBpZgQlhgYiNEkha71uwMWnyjwcHGZLPFaMydFrTmRJEdgQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCi3tpf+lWrDaA5NYwV5lR+EVRJP2MK3UHM2COWWRF5Q7Fw+sHLDmhXPbkpVN9Vu1sa6noxbgoHhBQHbMXsH48MRKe6XeJSFG/dtjobRr9ZxZFuI08vA2Nio+kJnG0jz+Cur08dLXs6EpEx7RdE0g0PN2HrxRNcJUsRHo3I9lLSdsL0aYNP9yzdB3LQN4jn3Wx7D4LAZ6rKTlXdrmQXyDIRNlKQ9zNHRDYcgb0vT29tJj2Lk/7ZMN8cnOmltsJ3rW9XoEhfWXfyX8lu5K6/W5uhHZX5A1BamNmG94VnI8d3aQZ77WMAe7DyVA7Shjm0U9EVCsU8T/2pWUXhVZz5bjT9</X509Certificate></X509Data></KeyInfo></Signature><Subject><NameID Format=""urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"">NeilGoodliffe@gpcsd.ca</NameID><SubjectConfirmation Method=""urn:oasis:names:tc:SAML:2.0:cm:bearer""><SubjectConfirmationData InResponseTo=""_3c719782-1baa-4763-8a80-67ff1bec5dfa"" NotOnOrAfter=""2022-06-09T22:57:10.641Z"" Recipient=""https://gpcsd.insigniails.com/ILS/SAML/AssertionConsumerService.aspx?binding=urn%3Aoasis%3Anames%3Atc%3ASAML%3A2.0%3Abindings%3AHTTP-POST"" /></SubjectConfirmation></Subject>
+         //<Conditions NotBefore=""2022-06-09T21:52:10.641Z"" NotOnOrAfter=""2022-06-09T22:57:10.641Z"">
+         //<AudienceRestriction><Audience>https://gpcsd.insigniails.com/ILS/</Audience></AudienceRestriction></Conditions>
+         //<AttributeStatement><Attribute Name=""http://schemas.microsoft.com/identity/claims/tenantid""><AttributeValue>781241c9-17cf-4620-84af-3520024063a8</AttributeValue></Attribute>
+         //<Attribute Name=""http://schemas.microsoft.com/identity/claims/objectidentifier""><AttributeValue>80ccbc96-12b4-4700-a235-4ce257b4a5a7</AttributeValue></Attribute>
+         //<Attribute Name=""http://schemas.microsoft.com/identity/claims/identityprovider""><AttributeValue>https://sts.windows.net/781241c9-17cf-4620-84af-3520024063a8/</AttributeValue>
+         //</Attribute><Attribute Name=""http://schemas.microsoft.com/claims/authnmethodsreferences""><AttributeValue>http://schemas.microsoft.com/ws/2008/06/identity/authenticationmethod/password</AttributeValue>
+         //<AttributeValue>http://schemas.microsoft.com/ws/2008/06/identity/authenticationmethod/x509</AttributeValue><AttributeValue>http://schemas.microsoft.com/claims/multipleauthn</AttributeValue></Attribute>
+         //<Attribute Name=""givenname""><AttributeValue>Neil</AttributeValue></Attribute><Attribute Name=""surname""><AttributeValue>Goodliffe</AttributeValue></Attribute>
+         //<Attribute Name=""emailaddress"">
+         //<AttributeValue>NeilGoodliffe@gpcsd.ca</AttributeValue></Attribute></AttributeStatement><AuthnStatement AuthnInstant=""2022-06-09T18:23:29.046Z"" SessionIndex=""_dc5d2294-4441-406a-ad1a-5cb486310100"">
+         //<AuthnContext><AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</AuthnContextClassRef></AuthnContext></AuthnStatement></Assertion>";
+
+
+         //         XmlDocument xmlDocument = new XmlDocument();
+         //         xmlDocument.LoadXml(xml);
+
+         //         XmlElement xmlElement = xmlDocument.DocumentElement;
+
+         //         SAMLAssertion samlAssertion = null;
+
+         //         samlAssertion = new SAMLAssertion(xmlElement);
+
+         //         string userName = samlAssertion.GetAttributeValue("emailaddress");
+
+
+         //         Console.WriteLine($"userName:{userName}");
+
+         //string url1 = "http://stimson.contentdm.oclc.org/cdm/ref/collection/p15290coll4/id/259";
+
+         //string encodeurl1 = "http%3A%2F%2Fstimson.contentdm.oclc.org%2Fcdm%2Fref%2Fcollection%2Fp15290coll4%2Fid%2F259";
+
+         //string url2 = "http://search.ebscohost.com/login.aspx?direct=true&scope=site&db=nlebk&db=nlabk&AN=281922";
+
+         //string encodeurl2 = "http%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fdirect%3Dtrue%26scope%3Dsite%26db%3Dnlebk%26db%3Dnlabk%26AN%3D281922";
+
+
+         //string url3 = "http://firstsearch.oclc.org/journal=0459-7222;screen=info;ECOIP";
+
+         //string encodeurl3 = "http%3A%2F%2Ffirstsearch.oclc.org%2Fjournal%3D0459-7222%3Bscreen%3Dinfo%3BECOIP";
+
+         //string url4 = "https://search-ebscohost-com.stimson.idm.oclc.org/login.aspx?direct=true&db=nlebk&AN=2523058&site=ehost-live";
+
+         //string encodeurl4 = "https%3A%2F%2Fsearch-ebscohost-com.stimson.idm.oclc.org%2Flogin.aspx%3Fdirect%3Dtrue%26db%3Dnlebk%26AN%3D2523058%26site%3Dehost-live";
+
+
+         //Console.WriteLine($"{url1}:{HttpUtility.UrlEncode(url1)}::: {HttpUtility.UrlEncode(url1) == encodeurl1}");
+
+         //Console.WriteLine($"{url3}:{HttpUtility.UrlEncode(url3)}::: {HttpUtility.UrlEncode(url3) == encodeurl3}");
+
+         TestXmlParse();
+
+         Console.ReadLine();
       }
+
+      public static string Base64Encode(string source)
+      {
+         return Base64Encode(Encoding.UTF8, source);
+      }
+
+      public static string Base64Encode(Encoding encodeType, string source)
+      {
+         string encode = string.Empty;
+         byte[] bytes = encodeType.GetBytes(source);
+         try
+         {
+            encode = Convert.ToBase64String(bytes);
+         }
+         catch
+         {
+            encode = source;
+         }
+         return encode;
+      }
+
+
+
 
 
       private void learn360Test()
@@ -413,7 +540,7 @@ namespace ConsoleApp
       {
          try
          {
-            var responseData = RequestURL_GET(strURL, "Login");
+            var responseData = RestHelper.RequestURL_GET(strURL, "Login");
 
             if (responseData.XmlDoc != null)
             {
@@ -436,180 +563,171 @@ namespace ConsoleApp
 
 
       #region NewsBank
-      private static void TestLoginNewsBank()
-      {
-         //string url = string.Format("https://docs.newsbank.com/gateway2/platform/login?api_key=0C23C4311286439C8A9A6004A07DF834&cust_auth_type=userpw&cust_auth=Insignia123|Insignia123");
-         string url = string.Format("https://docs.newsbank.com/gateway2/platform/login?api_key=0C23C4311286439C8A9A6004A07DF834&cust_auth_type=userpw&cust_auth=38MWRLIB|2001CFSC");
 
-
-
-         try
-         {
-
-            XmlDocument xmlDocument =  LoadXMLFromURL(url);
-            string strFilePath = "C:\\product.xml";
-            //XmlDocument xmlDocument = LoadXMLFromFile(strFilePath);
-
-            if (xmlDocument != null)
-            {
-               var node = xmlDocument.SelectSingleNode("authentication/authenticationtoken");
-               if (node != null)
-               {
-                  System.Console.WriteLine(node.InnerText);
-               }
-
-               var nodeProducts = xmlDocument.SelectNodes("authentication/productinfo/product");
-               if (nodeProducts != null)
-               {
-                  string strProductNames = string.Empty;
-                  foreach (XmlNode nodeProduct in nodeProducts)
-                  {
-                     XmlNode nodeProductName = nodeProduct.SelectSingleNode("acronym");
-                     if (nodeProductName != null)
-                     {
-                        strProductNames += nodeProductName.InnerText + "=====";
-                     }
-                  }
-
-                  System.Console.WriteLine(strProductNames);
-               }
-            }
-           
-
-         }
-         catch (Exception)
-         {
-
-            throw;
-         }
-      }
 
       /// <summary>
 
       /// </summary>
       public static void TestXmlParse()
       {
-         string strFilePath = "C:\\1PAW.xml";
+         string strFilePath = "C:\\clickView.xml";
+
+       
 
          XmlDocument xmlDoc = LoadXMLFromFile(strFilePath);
 
-         if (xmlDoc != null)
+
+         var nodes = xmlDoc.SelectNodes("rss/channel/item");
+
+         XmlDocument xmlDoc1 = new XmlDocument();
+
+         xmlDoc1.LoadXml(nodes[0].OuterXml);
+
+         var itemNode = xmlDoc1.SelectSingleNode("item");
+
+         foreach (XmlNode itemSub in itemNode.ChildNodes)
          {
-            var node = xmlDoc.SelectSingleNode("resultList/fedtask/result/hitlist");
-            if (node != null)
-            {
+            Console.WriteLine($"itemSub:{itemSub.Name}");
 
-               var totalAttribute = node.Attributes["total"];
-               if (totalAttribute != null)
-               {
-                  Console.WriteLine($"total:{totalAttribute.InnerText}");
-
-               }
-
-               var countAttribute = node.Attributes["count"];
-               if (countAttribute != null)
-               {
-                  Console.WriteLine($"count:{countAttribute.InnerText}");
-               }
-               else
-               {
-                  return;
-               }
-
-               var firstAttribute = node.Attributes["first"];
-               if (firstAttribute != null)
-               {
-                  Console.WriteLine($"first:{firstAttribute.InnerText}");
-               }
-               else
-               {
-                  return;
-               }
-
-               //Publication Name ? Title (245a)
-               //Publication Date ? Pub.Date(264c)
-               //Headline? Subtitle(245b)
-               //Preview? Summary(520a)
-               //Aut? Author(100a)
-               //Rank? The relevance rank score(if we don’t use this we, can ignore it)
-               if (node.HasChildNodes)
-               {
-                  foreach (XmlNode childNode in node.ChildNodes)
-                  {
-                     string Title245a = string.Empty;
-                     string SubTitle245b = string.Empty;
-                     string Authoer100a = string.Empty;
-                     string Summary520a = string.Empty;
-                     string pubName264b = string.Empty;
-                     string pubDate264c = string.Empty;
-                     string url = string.Empty;
-
-                     var findNode = childNode.SelectSingleNode("text[@type='title']");
-
-                     if (findNode != null)
-                     {
-                        Title245a = findNode.InnerText;
-                     }
-
-
-
-                     findNode = childNode.SelectSingleNode("publication-name");
-
-                     if (findNode != null)
-                     {
-                        pubName264b = findNode.InnerText;
-                     }
-
-
-                     findNode = childNode.SelectSingleNode("publication-date");
-                     if (findNode != null)
-                     {
-                        pubDate264c = findNode.InnerText;
-                     }
-
-                     findNode = childNode.SelectSingleNode("field[@name='hed']");
-                     if (findNode != null)
-                     {
-                        SubTitle245b = findNode.InnerText;
-                     }
-
-                     findNode = childNode.SelectSingleNode("field[@name='aut']");
-                     if (findNode != null)
-                     {
-                        Authoer100a = findNode.InnerText;
-                     }
-
-                     findNode = childNode.SelectSingleNode("field[@name='preview']");
-                     if (findNode != null)
-                     {
-                        Summary520a = findNode.InnerText;
-                     }
-
-                     findNode = childNode.SelectSingleNode("openurl/url");
-                     if (findNode != null)
-                     {
-                        url = findNode.InnerText;
-                     }
-
-
-                     Console.WriteLine($"\nTitle245a:{Title245a}");
-                     Console.WriteLine($"SubTitle245b:{SubTitle245b}");
-                     Console.WriteLine($"Authoer100a:{Authoer100a}");
-                     Console.WriteLine($"Summary520a:{Summary520a}");
-                     Console.WriteLine($"pubName264b:{pubName264b}");
-                     Console.WriteLine($"pubDate264c:{pubDate264c}");
-                     Console.WriteLine($"url:{url}");
-
-                     Console.ReadKey();
-
-                  }
-               }
-
-
-
-
+            if(itemSub.Name== "pubDate")
+				{
+               Console.WriteLine($"mediaSub:{DateTime.Parse(itemSub.InnerText)}");
             }
+
+				if (itemSub.Name.ToUpper().Contains("MEDIA:CONTENT"))
+				{
+               foreach(XmlNode mediaSub in itemSub.ChildNodes)
+					{
+                  Console.WriteLine($"mediaSub:{mediaSub.Name}");
+               }
+				}
          }
+
+         //var node = xmlDoc1.SelectSingleNode("item/guid");
+
+         //Console.WriteLine($"node:{node.InnerText}");
+
+
+         Console.WriteLine($"total:{nodes.Count}");
+         return;
+
+         //if (xmlDoc != null)
+         //{
+         //   var node = xmlDoc.SelectSingleNode("resultList/fedtask/result/hitlist");
+         //   if (node != null)
+         //   {
+
+         //      var totalAttribute = node.Attributes["total"];
+         //      if (totalAttribute != null)
+         //      {
+         //         Console.WriteLine($"total:{totalAttribute.InnerText}");
+
+         //      }
+
+         //      var countAttribute = node.Attributes["count"];
+         //      if (countAttribute != null)
+         //      {
+         //         Console.WriteLine($"count:{countAttribute.InnerText}");
+         //      }
+         //      else
+         //      {
+         //         return;
+         //      }
+
+         //      var firstAttribute = node.Attributes["first"];
+         //      if (firstAttribute != null)
+         //      {
+         //         Console.WriteLine($"first:{firstAttribute.InnerText}");
+         //      }
+         //      else
+         //      {
+         //         return;
+         //      }
+
+         //      //Publication Name ? Title (245a)
+         //      //Publication Date ? Pub.Date(264c)
+         //      //Headline? Subtitle(245b)
+         //      //Preview? Summary(520a)
+         //      //Aut? Author(100a)
+         //      //Rank? The relevance rank score(if we don’t use this we, can ignore it)
+         //      if (node.HasChildNodes)
+         //      {
+         //         foreach (XmlNode childNode in node.ChildNodes)
+         //         {
+         //            string Title245a = string.Empty;
+         //            string SubTitle245b = string.Empty;
+         //            string Authoer100a = string.Empty;
+         //            string Summary520a = string.Empty;
+         //            string pubName264b = string.Empty;
+         //            string pubDate264c = string.Empty;
+         //            string url = string.Empty;
+
+         //            var findNode = childNode.SelectSingleNode("text[@type='title']");
+
+         //            if (findNode != null)
+         //            {
+         //               Title245a = findNode.InnerText;
+         //            }
+
+
+
+         //            findNode = childNode.SelectSingleNode("publication-name");
+
+         //            if (findNode != null)
+         //            {
+         //               pubName264b = findNode.InnerText;
+         //            }
+
+
+         //            findNode = childNode.SelectSingleNode("publication-date");
+         //            if (findNode != null)
+         //            {
+         //               pubDate264c = findNode.InnerText;
+         //            }
+
+         //            findNode = childNode.SelectSingleNode("field[@name='hed']");
+         //            if (findNode != null)
+         //            {
+         //               SubTitle245b = findNode.InnerText;
+         //            }
+
+         //            findNode = childNode.SelectSingleNode("field[@name='aut']");
+         //            if (findNode != null)
+         //            {
+         //               Authoer100a = findNode.InnerText;
+         //            }
+
+         //            findNode = childNode.SelectSingleNode("field[@name='preview']");
+         //            if (findNode != null)
+         //            {
+         //               Summary520a = findNode.InnerText;
+         //            }
+
+         //            findNode = childNode.SelectSingleNode("openurl/url");
+         //            if (findNode != null)
+         //            {
+         //               url = findNode.InnerText;
+         //            }
+
+
+         //            Console.WriteLine($"\nTitle245a:{Title245a}");
+         //            Console.WriteLine($"SubTitle245b:{SubTitle245b}");
+         //            Console.WriteLine($"Authoer100a:{Authoer100a}");
+         //            Console.WriteLine($"Summary520a:{Summary520a}");
+         //            Console.WriteLine($"pubName264b:{pubName264b}");
+         //            Console.WriteLine($"pubDate264c:{pubDate264c}");
+         //            Console.WriteLine($"url:{url}");
+
+         //            Console.ReadKey();
+
+         //         }
+         //      }
+
+
+
+
+         //   }
+         //}
 
        
       }
@@ -677,176 +795,8 @@ namespace ConsoleApp
 
 
 
-      class ResponseModel
-      {
-         public XmlDocument XmlDoc { get; set; }
-
-         public HttpStatusCode StatusCode { get; set; }
-      }
-
-      /// <summary>
-      /// if error  throw ex 
-      /// </summary>
-      /// <param name="URL"></param>
-      /// <param name="ActionStep">action step</param>
-      /// <returns></returns>
-      private static ResponseModel RequestURL_GET(string URL, string ActionStep)
-      {
-         int action = 3;
-         try
-         {
-            if (action == 1)
-            {
-               var client = new RestClient(URL);
-               client.Timeout = -1;
-               var request = new RestRequest(Method.GET);
-               IRestResponse response = client.Execute(request);
-
-               if (response.StatusCode == HttpStatusCode.OK
-                           || response.StatusCode == HttpStatusCode.Created
-                           || response.StatusCode == HttpStatusCode.Accepted)
-               {
-                  XmlDocument xmlDoc = new XmlDocument();
-                  xmlDoc.Load(response.Content);
-                  var responseData = new ResponseModel()
-                  {
-                     XmlDoc = xmlDoc,
-                     StatusCode = response.StatusCode,
-                  };
-                  return responseData;
-               }
-               else
-               {
-                  var responseData = new ResponseModel()
-                  {
-                     XmlDoc = null,
-                     StatusCode = response.StatusCode,
-                  };
-
-                  return responseData;
-               }
-            }
-            else if(action == 2)
-            {
-               HttpRequest httpRequest = new HttpRequest();
-               IResopnse response = httpRequest.Get(URL);
-
-               if (response.StatusCode == HttpStatusCode.OK
-                           || response.StatusCode == HttpStatusCode.Created
-                           || response.StatusCode == HttpStatusCode.Accepted)
-               {
-                  XmlDocument xmlDoc = new XmlDocument();
-                  xmlDoc.Load(response.Result);
-                  var responseData = new ResponseModel()
-                  {
-                     XmlDoc = xmlDoc,
-                     StatusCode = response.StatusCode,
-                  };
-                  return responseData;
-               }
-               else
-               {
-                  var responseData = new ResponseModel()
-                  {
-                     XmlDoc = null,
-                     StatusCode = response.StatusCode,
-                  };
-
-                  return responseData;
-               }
-
-            }
-            else
-            {
-               try
-               {
-
-
-
-                  HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(URL);
-                  httpWebRequest.Method = "GET";
-                  httpWebRequest.Timeout = -1;
-                  httpWebRequest.KeepAlive = true;
-                  httpWebRequest.ProtocolVersion = HttpVersion.Version10;
-                  httpWebRequest.ServicePoint.ConnectionLimit = 1;
-                  using (HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse())
-                  {
-                     if (response.StatusCode == HttpStatusCode.OK
-                        || response.StatusCode == HttpStatusCode.Created
-                        || response.StatusCode == HttpStatusCode.Accepted)
-                     {
-                        using (Stream s = response.GetResponseStream())
-                        {
-                           using (StreamReader sr = new StreamReader(s, System.Text.Encoding.Default))
-                           {
-                              XmlDocument xmlDoc = new XmlDocument();
-                              xmlDoc.Load(sr);
-                              var responseData = new ResponseModel()
-                              {
-                                 XmlDoc = xmlDoc,
-                                 StatusCode = response.StatusCode,
-                              };
-                              return responseData;
-                           }
-                        }
-                     }
-                     else
-                     {
-                        var responseData = new ResponseModel()
-                        {
-                           XmlDoc = null,
-                           StatusCode = response.StatusCode,
-                        };
-
-                        return responseData;
-                     }
-                  }
-               }
-               catch (WebException ex)
-               {
-                  if (ex.Response != null)
-                  {
-                     HttpWebResponse response = (HttpWebResponse)ex.Response;
-                     if (response != null)
-                     {
-                        using (var stream = response.GetResponseStream())
-                        {
-                           using (var streamReader = new StreamReader(stream, Encoding.Default))
-                           {
-
-                              throw new Exception(string.Format("step:{3},StatusCode:{0}-{1},Result:{2}"
-                                 , (int)response.StatusCode, response.StatusCode.ToString(), streamReader.ReadToEnd(), ActionStep));
-
-                           }
-                        }
-                     }
-                  }
-
-
-                  throw new Exception(string.Format("step:{0},message:{1}", ActionStep, ex.Message));
-
-               }
-               catch (Exception ex)
-               {
-                  throw new Exception(string.Format("step:{0},message:{1}", ActionStep, ex.Message));
-
-               }
-            }
-
-         }
-         catch (Exception)
-         {
-
-            throw;
-         }
-
-         return null;
-
-
-
      
-
-   }
+    
 
       
 

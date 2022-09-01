@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -175,7 +176,53 @@ namespace WinForm_Sudio
 				return ToHexString(hmBytes);
 			}
 		}
+		public static string DESEncrypt(string inputString, string key)
+		{
+			MemoryStream ms = null;
+			CryptoStream cs = null;
+			StreamWriter sw = null;
 
+			DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+			try
+			{
+				ms = new MemoryStream();
+				cs = new CryptoStream(ms, des.CreateEncryptor(ASCIIEncoding.ASCII.GetBytes(key), ASCIIEncoding.ASCII.GetBytes(key)), CryptoStreamMode.Write);
+				sw = new StreamWriter(cs);
+				sw.Write(inputString);
+				sw.Flush();
+				cs.FlushFinalBlock();
+				return Convert.ToBase64String(ms.GetBuffer(), 0, (int)ms.Length);
+			}
+			finally
+			{
+				if (sw != null) sw.Close();
+				if (cs != null) cs.Close();
+				if (ms != null) ms.Close();
+			}
+		}
+
+
+		public static string DESDecrypt(string inputString, string key)
+		{
+			MemoryStream ms = null;
+			CryptoStream cs = null;
+			StreamReader sr = null;
+
+			DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+			try
+			{
+				ms = new MemoryStream(Convert.FromBase64String(inputString));
+				cs = new CryptoStream(ms, des.CreateDecryptor(ASCIIEncoding.ASCII.GetBytes(key), ASCIIEncoding.ASCII.GetBytes(key)), CryptoStreamMode.Read);
+				sr = new StreamReader(cs);
+				return sr.ReadToEnd();
+			}
+			finally
+			{
+				if (sr != null) sr.Close();
+				if (cs != null) cs.Close();
+				if (ms != null) ms.Close();
+			}
+		}
 		public string ToHexString(byte[] array)
 		{
 			StringBuilder hex = new StringBuilder(array.Length * 2);
@@ -184,6 +231,17 @@ namespace WinForm_Sudio
 				hex.AppendFormat("{0:X2}", b);
 			}
 			return hex.ToString();
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+
+			textBox2.Text = WebUtility.UrlEncode(DESEncrypt(textBox1.Text, "88888888"));
+		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+			textBox3.Text = DESDecrypt(WebUtility.UrlDecode(textBox4.Text), "88888888");
 		}
 	}
 }
