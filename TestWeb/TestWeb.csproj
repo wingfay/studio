@@ -161,6 +161,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MonerisController.cs" />
     <Compile Include="Controllers\PDFController.cs" />
+    <Compile Include="Controllers\ProblemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -347,6 +348,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Problem\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

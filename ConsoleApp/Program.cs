@@ -281,6 +281,7 @@ namespace ConsoleApp
          #endregion
 
 
+
          //string clientID = "de29abdf-a2fa-4e79-92f8-5bf942f877a9";
          //string clientSecret = "67f49c94-9291-4ce1-b55b-125d1ea6c307";
 
@@ -348,7 +349,39 @@ namespace ConsoleApp
 
          //Console.WriteLine($"{url3}:{HttpUtility.UrlEncode(url3)}::: {HttpUtility.UrlEncode(url3) == encodeurl3}");
 
-         TestXmlParse();
+         //TestXmlParse();
+
+
+         // TestCrossRef();
+
+
+
+         //      string Json = string.Format(@"[{
+         //            ""AssetTag"": ""{0}"",
+         // ""FromSiteName"": """",
+         //""FromLocationCode"": """",
+         // ""FromGroupTag"": """",
+         // ""ToSiteName"": """",
+         // ""ToLocationCode"": """",
+         // ""ToGroupTag"": """",
+         // ""DueDate"": ""{1}"",
+         // ""CheckOutDate"": ""{2}"",
+         // ""VendorNumber"": """",
+         // ""CustomerNumber"": """",
+         // ""EmployeeNumber"": ""{3}"",
+         // ""Quantity"": 1.0,
+         // ""RecordSource"": """",
+         // ""Note"": """"}]", assetTag, DateTime.Now.ToString(), DateTime.Now.ToString(), patronID);
+
+         //      Console.WriteLine($"{Json}");
+
+         //LinqHelper.Intersect();
+
+         string s = "Unauthorized, category: -1, code: -1: ";
+
+         Console.WriteLine($"{s.Substring(0, s.IndexOf(","))}");
+
+         // TestGuid();
 
          Console.ReadLine();
       }
@@ -562,13 +595,47 @@ namespace ConsoleApp
       }
 
 
-      #region NewsBank
+		#region JSON
+
+      public static void TestJson()
+		{
+         string assetTag = "13123";
+
+         string patronID = "123123";
 
 
-      /// <summary>
 
-      /// </summary>
-      public static void TestXmlParse()
+         string Json1 = string.Format(@"
+               ""AssetTag"": ""123"",
+    ""FromSiteName"": """",
+   ""FromLocationCode"": """",
+    ""FromGroupTag"": """",
+    ""ToSiteName"": """",
+    ""ToLocationCode"": """",
+    ""ToGroupTag"": """",
+    ""DueDate"": ""123"",
+    ""CheckOutDate"": ""123"",
+    ""VendorNumber"": """",
+    ""CustomerNumber"": """",
+    ""EmployeeNumber"": ""123"",
+    ""Quantity"": 1.0,
+    ""RecordSource"": """",
+    ""Note"": """"");
+
+
+         Json1 = "[{" + Json1 + "}]";
+         Console.WriteLine($"{Json1}");
+      }
+		#endregion
+
+
+		#region NewsBank
+
+
+		/// <summary>
+
+		/// </summary>
+		public static void TestXmlParse()
       {
          string strFilePath = "C:\\clickView.xml";
 
@@ -795,13 +862,32 @@ namespace ConsoleApp
 
 
 
-     
-    
 
-      
+      public static string TestGuid()
+      {
 
 
-      
+         Console.WriteLine($"System.Guid.NewGuid().ToString():{System.Guid.NewGuid().ToString()}");
+
+         Console.WriteLine($"System.Guid.NewGuid().ToString(\"N\"):{System.Guid.NewGuid().ToString("N")}");
+
+         Console.WriteLine($"System.Guid.NewGuid().ToString(\"D\"):{System.Guid.NewGuid().ToString("D")}");
+
+         Console.WriteLine($"System.Guid.NewGuid().ToString(\"B\"):{System.Guid.NewGuid().ToString("B")}");
+
+         Console.WriteLine($"System.Guid.NewGuid().ToString(\"P\"):{System.Guid.NewGuid().ToString("P")}");
+
+         Console.WriteLine($"System.Guid.NewGuid().ToString(\"X\"):{System.Guid.NewGuid().ToString("X")}");
+
+         Console.ReadKey();
+
+         return "";
+      }
+
+
+
+
+
 
 
       public static string CreateInvoice()
@@ -837,7 +923,7 @@ namespace ConsoleApp
       public static void TestMerchant()
       {
          //CanadaPurchaseTest.Test(Global.StoreName,Global.Token,string.Empty);
-
+         
          //   TestCanadaIDebitPurchase.Test();
 
          //int unitp5 = 100 / 5;
@@ -967,6 +1053,81 @@ namespace ConsoleApp
          }
       }
 
+      public static void TestCrossRef()
+      {
+
+         IHttpRequest httpRequest = new HttpRequest();
+         //string strValue = "10.1038/nature12373";
+         string strValue = "test";
+
+         string searchURL = "https://api.crossref.org/works?query.title=programming";
+         try
+         {
+            IResopnse resopnse = httpRequest.Get(string.Format(searchURL, strValue));
+
+
+
+            JObject JsonData = Newtonsoft.Json.JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>(resopnse.Result);
+
+            ResultDetail resultDetail = new ResultDetail();
+
+            resultDetail.Title = JsonData["title"].ToString();
+            resultDetail.PublicationDate = JsonData["published_date"].ToString();
+            resultDetail.PublicationName = JsonData["publisher"].ToString();
+
+
+            string Authors = string.Empty;
+
+            if (JsonData["z_authors"] != null)
+            {
+               for (int i = 0; i < JsonData["z_authors"].Count(); i++)
+               {
+                  if (Authors.Length > 0)
+                  {
+                     Authors += ";";
+                  }
+
+                  Authors += JsonData["z_authors"][i]["family"].ToString();
+               }
+            }
+            resultDetail.Authors = Authors;
+
+            if (JsonData["is_oa"].ToString() == "True")
+            {
+               if (JsonData["best_oa_location"] != null)
+               {
+                  if (JsonData["best_oa_location"]["url"] != null)
+                  {
+                     resultDetail.URI = JsonData["best_oa_location"]["url"].ToString();
+                  }
+                  else if (JsonData["best_oa_location"]["url_for_pdf"] != null)
+                  {
+                     resultDetail.URI = JsonData["best_oa_location"]["url_for_pdf"].ToString();
+                  }
+               }
+            }
+
+            System.Console.WriteLine(string.Format("Title:{0};Authors:{1};URI:{2};publisher:{3};published_date{4}"
+               , resultDetail.Title, resultDetail.Authors, resultDetail.URI, resultDetail.PublicationName, resultDetail.PublicationDate));
+
+            //if (resopnse.StatusCode == System.Net.HttpStatusCode.NotFound)
+            //{
+
+            //   System.Console.WriteLine(resopnse.Result);
+            //}
+            //else
+            //{
+            //   System.Console.WriteLine(resopnse.Result);
+
+            //}
+         }
+         catch (Exception ex)
+         {
+
+            throw;
+         }
+      }
+
 
       public static void TestEduvision()
 		{
@@ -1007,6 +1168,10 @@ namespace ConsoleApp
 
 
       }
+
+
+      
+
 
 
       public class ResultDetail
