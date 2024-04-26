@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+	<title>使用ByteArray展示PDF</title>
+</head>
+<body>
+	<iframe id="pdfiframe" src="~/pdfjs-3.11.174-legacy-dist/web/viewer.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+	<script>
+		$(document).ready(function () {
+
+			var pdfjsframe = document.getElementById('pdfiframe');
+			pdfjsframe.onload = function () {
+				LoadPdfDocument();
+			};
+
+			function LoadPdfDocument() {
+				var pdfData = atob("@Model.PDF");
+				pdfjsframe.contentWindow.PDFViewerApplication.open(pdfData);
+			}
+
+			function base64ToUint8Array(base64) {
+				var raw = atob(base64);
+				var uint8Array = new Uint8Array(raw.length);
+				for (var i = 0; i < raw.length; i++) {
+					uint8Array[i] = raw.charCodeAt(i);
+				}
+				return uint8Array;
+			}
+
+
+			var iframe = $("#pdfiframe")
+
+			iframe.on("load", () => {
+
+
+				$("#pdfiframe").contents().find(".disabledOpenFile").remove();
+				$("#pdfiframe").contents().find(".disabledPrint").remove();
+				$("#pdfiframe").contents().find(".disabledDownload").remove();
+				$("#pdfiframe").contents().find(".disabledBookMark").remove();
+			});
+		});
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8" />
+   <title></title>
+
+   <style>
+      @charset "utf-8";
+
+      * {
+         -webkit-box-sizing: border-box;
+         -moz-box-sizing: border-box;
+         box-sizing: border-box;
+      }
+
+      html, body {
+         height: 100%;
+      }
+
+      body {
+         color: #7d5a5a;
+         overflow: hidden;
+         margin: 0;
+         font-family: arial,tahoma,verdana,sans-serif;
+      }
+
+      h1, h2 {
+         margin: 0;
+      }
+
+      .flexlayout {
+         display: flex;
+         display: -webkit-flex;
+      }
+
+         .flexlayout > * {
+            min-width: 0;
+         }
+
+      .flexlayoutcol {
+         display: flex;
+         display: -webkit-flex;
+         flex-direction: column;
+         -webkit-flex-direction: column
+      }
+
+         .flexlayoutcol > * {
+            min-height: 0
+         }
+      /*blue2 skin*/
+      .blue2-style {
+         background: #f7f7f7;
+         color: #037ac1;
+      }
+
+         .blue2-style .error-page-heading, .blue2-style .error-page-footer {
+            background-color: #0079c0;
+            color: #fff;
+         }
+
+         .blue2-style .list-links a {
+            /*color: #f1a81f;*/
+         }
+
+         .blue2-style .error-split {
+            border-right: 1px solid #96b5ac;
+         }
+      /*blue2 skin*/
+
+      .error-page-heading {
+         height: 3.6em;
+         padding: 1em;
+         text-align: center;
+      }
+
+         .error-page-heading h1 {
+            font-weight: normal;
+            font-size: 1em;
+         }
+
+      .error-page-flex1 {
+         flex: 1;
+         -webkit-flex: 1;
+      }
+
+      .error-page-content {
+         width: 40em;
+         margin: 0 auto;
+      }
+
+      .error-text-item {
+         margin-left: 1em;
+         font-size: 0.875em;
+         line-height: 1.4em;
+         text-align: center;
+      }
+
+      .error-page-footer {
+         font-size: 0.875em;
+         height: 3em;
+         text-align: center;
+      }
+
+      .list-links, .list-links li {
+         margin: 0;
+         padding: 0;
+         list-style: none;
+      }
+
+         .list-links a {
+            text-decoration: none;
+         }
+
+      .a-button-style {
+         display: block;
+         width: 200px;
+         padding: 5px 0;
+         margin: 0 auto;
+         background-color: #0079c0;
+         border: 1px solid #0079c0;
+         border-radius: 3px;
+         color: #fff;
+         font-weight: normal !important;
+         font-size: 0.75em;
+      }
+
+         .a-button-style:hover {
+            background-color: #2262c3;
+            color: #fff;
+         }
+   </style>
+</head>
+<body>
+   <div class="flexlayoutcol blue2-style" style="height:100%;">
+      <div class="error-page-heading">
+         <h1>400 Bad Request</h1>
+      </div>
+      <div style="flex:0.6;-webkit-flex:0.6;"></div>
+      <div class=" flexlayoutcol error-page-content">
+         <div style="margin-bottom:30px;">
+            <p style="font-size:120px; margin:0; text-align:center; letter-spacing:10px;">
+               400
+            </p>
+         </div>
+         <div class="error-text-item">
+            <p style=" margin-bottom:40px; font-size:1.1em; color:#636363;">
+               Your browser sent a request that
+               this server could not understand.
+            </p>
+            <ul class="list-links">
+               <li style=" font-size:1.3em;"><a href="javascript:void(0);" onclick="history.back();" class="a-button-style">GO BACK</a></li>
+            </ul>
+         </div>
+      </div>
+      <div class="error-page-flex1"></div>
+      <div class="error-page-footer">
+         <p>©Niko</p>
+      </div>
+   </div>
+</body>
+</html>

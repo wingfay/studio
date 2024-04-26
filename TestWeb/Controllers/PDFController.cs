@@ -21,6 +21,39 @@ namespace TestWeb.Controllers
          return View();
       }
 
+      public ActionResult UseDemo()
+      {
+
+         try
+         {
+            FileStream readPdf = new FileStream(Request.PhysicalApplicationPath + @"\customerData\1.pdf", FileMode.Open);
+            long fileSize = readPdf.Length;
+            byte[] bufferArray = new byte[fileSize];
+            readPdf.Read(bufferArray, 0, (int)fileSize);
+            readPdf.Close();
+
+            string base64Str = Convert.ToBase64String(bufferArray);
+
+            var viewModel = new PdfViewModel
+            {
+               PDF = base64Str
+            };
+
+            return View(viewModel);
+         }
+         catch (Exception ex)
+         {
+            return BadRequest();
+         }
+
+
+      }
+
+      public ActionResult UseDemo2()
+      {
+         return View();
+      }
+
       [HttpPost]
       public string getPdfStream(string args)
       {
@@ -46,5 +79,16 @@ namespace TestWeb.Controllers
             return JsonConvert.SerializeObject(returnstr);
          }
       }
+
+      protected ActionResult BadRequest()
+      {
+         return Redirect("~/400.html");
+      }
+
+   }
+
+   public class PdfViewModel
+   {
+      public string PDF { get; set; }
    }
 }

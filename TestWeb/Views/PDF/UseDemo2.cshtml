@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+	<title>Ajax Load PDF viewer</title>
+</head>
+<body>
+	<iframe id="pdfiframe" src="~/pdfjs-3.11.174-legacy-dist/web/viewer.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+	<script>
+
+		var $scope;
+		$scope.PdfDocumentLoaded = true;
+
+		$.ajax({
+			async: false,
+			type: 'POST',
+			url: "/PDF/getPdfStream",
+			data: {
+				"args": "" //可带参数请求
+			},
+			success: function (rJson) {
+				var rObj = $.parseJSON(rJson);
+				if (rObj.success === "true") {
+
+					$scope.base64Data = rObj.data;
+
+					LoadPdfDocument();
+
+				}
+			}
+		});
+
+			var pdfjsframe = document.getElementById('pdfiframe');
+			pdfjsframe.onload = function () {
+				LoadPdfDocument();
+			};
+
+
+
+
+		function LoadPdfDocument() {
+			if ($scope.PdfDocumentLoaded)
+				return;
+			if (!$scope.base64Data)
+				return;
+
+			pdfjsframe.contentWindow.PDFViewerApplication.open(atob($scope.base64Data));
+
+			$scope.PdfDocumentLoaded = true;
+		}
+
+
+		$(document).ready(function () {
+
+
+
+
+
+			var iframe = $("#pdfiframe")
+
+			iframe.on("load", () => {
+
+
+				$("#pdfiframe").contents().find(".disabledOpenFile").remove();
+				$("#pdfiframe").contents().find(".disabledPrint").remove();
+				$("#pdfiframe").contents().find(".disabledDownload").remove();
+				$("#pdfiframe").contents().find(".disabledBookMark").remove();
+			});
+		});
+
+	</script>
+</body>
+</html>
