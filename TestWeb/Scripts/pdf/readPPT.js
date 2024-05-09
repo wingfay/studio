@@ -2,7 +2,7 @@
  */
 (function($) {
     $(function() {
-       var url = "../customerData/1.pdf";
+       var url = "../customerData/BBB.pdf";
 
         var pdfDoc = null,
             pageNum = 1,

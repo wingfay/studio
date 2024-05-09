@@ -12,29 +12,40 @@
 	<title>使用ByteArray展示PDF</title>
 </head>
 <body>
-	<iframe id="pdfiframe" src="~/pdfjs-3.11.174-legacy-dist/web/viewer.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+	<iframe id="pdfiframe" src="~/pdfjs/web/viewer.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
 	<script>
+
+		var pdfData = base64ToUint8Array("@Model.PDF");
+
+		function base64ToUint8Array(base64) {
+			var raw = window.atob(base64);
+			var rawLength = raw.length;
+			var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+			for (var i = 0; i < rawLength; i++) {
+				array[i] = raw.charCodeAt(i) & 0xff;
+			}
+			return array;
+		}
+
 		$(document).ready(function () {
 
 			var pdfjsframe = document.getElementById('pdfiframe');
+
 			pdfjsframe.onload = function () {
 				LoadPdfDocument();
 			};
 
+			try {
+				LoadPdfDocument();
+			} catch (e) {
+
+			}
+
 			function LoadPdfDocument() {
-				var pdfData = atob("@Model.PDF");
-				pdfjsframe.contentWindow.PDFViewerApplication.open(pdfData);
+				pdfjsframe.contentWindow.PDFViewerApplication.open({ data: pdfData });
+				console.log("LoadPdfDocument");
 			}
-
-			function base64ToUint8Array(base64) {
-				var raw = atob(base64);
-				var uint8Array = new Uint8Array(raw.length);
-				for (var i = 0; i < raw.length; i++) {
-					uint8Array[i] = raw.charCodeAt(i);
-				}
-				return uint8Array;
-			}
-
 
 			var iframe = $("#pdfiframe")
 

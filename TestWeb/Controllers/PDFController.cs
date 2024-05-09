@@ -26,7 +26,7 @@ namespace TestWeb.Controllers
 
          try
          {
-            FileStream readPdf = new FileStream(Request.PhysicalApplicationPath + @"\customerData\1.pdf", FileMode.Open);
+            FileStream readPdf = new FileStream(Request.PhysicalApplicationPath + @"\customerData\BBB.pdf", FileMode.Open);
             long fileSize = readPdf.Length;
             byte[] bufferArray = new byte[fileSize];
             readPdf.Read(bufferArray, 0, (int)fileSize);
@@ -61,7 +61,7 @@ namespace TestWeb.Controllers
 
          try
          {
-            FileStream readPdf = new FileStream(Request.PhysicalApplicationPath + @"\customerData\1.pdf", FileMode.Open);
+            FileStream readPdf = new FileStream(Request.PhysicalApplicationPath + @"\customerData\BBB.pdf", FileMode.Open);
             long fileSize = readPdf.Length;
             byte[] bufferArray = new byte[fileSize];
             readPdf.Read(bufferArray, 0, (int)fileSize);

@@ -377,9 +377,11 @@ namespace ConsoleApp
 
          //LinqHelper.Intersect();
 
-         string s = "Unauthorized, category: -1, code: -1: ";
+         MatchFileContent();
 
-         Console.WriteLine($"{s.Substring(0, s.IndexOf(","))}");
+         //string s = "Unauthorized, category: -1, code: -1: ";
+
+         //Console.WriteLine($"{s.Substring(0, s.IndexOf(","))}");
 
          // TestGuid();
 
@@ -407,6 +409,27 @@ namespace ConsoleApp
       }
 
 
+      private static void MatchFileContent()
+		{
+         string file1Path = @"C:\pdf\demo.txt";
+         string file2Path = @"C:\pdf\right1.txt";
+
+         // Read the content of the first file
+         string file1Content = File.ReadAllText(file1Path);
+
+         // Read the content of the second file
+         string file2Content = File.ReadAllText(file2Path);
+
+         // Compare the content of the two files
+         if (file1Content.Equals(file2Content))
+         {
+            Console.WriteLine("The content of the two files is the same.");
+         }
+         else
+         {
+            Console.WriteLine("The content of the two files is different.");
+         }
+      }
 
 
 

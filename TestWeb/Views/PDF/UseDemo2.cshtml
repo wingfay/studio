@@ -12,11 +12,11 @@
 	<title>Ajax Load PDF viewer</title>
 </head>
 <body>
-	<iframe id="pdfiframe" src="~/pdfjs-3.11.174-legacy-dist/web/viewer.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+	<iframe id="pdfiframe" src="~/pdfjs/web/viewer.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
 	<script>
 
-		var $scope;
-		$scope.PdfDocumentLoaded = true;
+		var $scope = { PdfDocumentLoaded: false, base64Data:null };
+
 
 		$.ajax({
 			async: false,
@@ -30,7 +30,7 @@
 				if (rObj.success === "true") {
 
 					$scope.base64Data = rObj.data;
-
+					console.log("getPdfStream Loaded");
 					LoadPdfDocument();
 
 				}
@@ -51,9 +51,35 @@
 			if (!$scope.base64Data)
 				return;
 
-			pdfjsframe.contentWindow.PDFViewerApplication.open(atob($scope.base64Data));
+			if (pdfjsframe) {
+				console.log("pdfjsframe exist");
+			}
+
+			if (pdfjsframe.contentWindow) {
+				console.log("pdfjsframe.contentWindow exist");
+			}
+
+			if (pdfjsframe.contentWindow.PDFViewerApplication) {
+				console.log("pdfjsframe.contentWindow.PDFViewerApplication exist");
+			}
+			//pdfjsframe.contentWindow.PDFViewerApplication.viewerPrefs.showPreviousViewOnLoad = false
+
+			pdfjsframe.contentWindow.PDFViewerApplication.open({ data: base64ToUint8Array($scope.base64Data) });
 
 			$scope.PdfDocumentLoaded = true;
+			console.log("PdfDocumentLoaded");
+		}
+
+
+		function base64ToUint8Array(base64) {
+			var raw = window.atob(base64);
+			var rawLength = raw.length;
+			var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+			for (var i = 0; i < rawLength; i++) {
+				array[i] = raw.charCodeAt(i) & 0xff;
+			}
+			return array;
 		}
 
 
